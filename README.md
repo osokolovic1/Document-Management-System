@@ -1,3 +1,5 @@
+DOCUMENT MANAGEMENT SYSTEM (DMS)
+
 Nakon analize poslovanja fakulteta, donesen je zaključak da kod klasičnog rada
 sa dokumentima, decentralizovane obrade podataka dolazi do raznih problema u vidu
 kašnjenja objavljivanja dokumenata. Document Management System bi uveliko olakšao
@@ -16,6 +18,7 @@ serveru. Pored toga, za rad sa korisnicima koristi se lokalna baza podataka. Gla
 sistema je aplikacija koja omogućava uposlenicima i studentima da dođu do željenih
 dokumenata, da obljavljuju nove dokumente ili uređuju postojeće ako imaju autorizaciju
 da to urade.
+
 
 Funkcionalnosti koje će sistem imati su:
 
