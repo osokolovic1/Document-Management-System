@@ -18,6 +18,7 @@ dokumenata, da obljavljuju nove dokumente ili uređuju postojeće ako imaju auto
 da to urade.
 
 Funkcionalnosti koje će sistem imati su:
+
 ● Online registracija i login
 
 ● Objavljivanje dokumenata
