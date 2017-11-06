@@ -74,6 +74,10 @@
 				</div>
 			</form>
 		</div>
+		
+		<div th:if="${param.error}">
+			<h3 style="color:red">Username or Password is wrong. Please check again</h1>
+		</div>
 
     </div> <!-- /container -->
   </body>
