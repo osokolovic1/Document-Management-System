@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
     <title>Prijava</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../static/css/bootstrap/dist/css/bootstrap.min.css" type="text/css"></link>
+    <link href="css/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 	<!--rel = stylesheet -->
     <!-- Custom styles for this template -->
-    <link href="../static/css/signin.css" type="text/css"></link>
+    <link href="css/signin.css" rel="stylesheet" />
 	
   </head>
 
@@ -24,9 +24,9 @@
 			<form class="form-signin" id="loginForm" onsubmit="" th:action="@{/login}" method="post">
 				<h3 class="form-signin-heading">Molimo, prijavite se</h3>
 				<input type="email" id="inputUserName" name="inputUserName" class="form-control" placeholder="Email"
-					   onfocus="" required autofocus>
+					   onfocus="" required="true" />
 				<input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Šifra"
-					   onfocus="" required>
+					   onfocus="" required="true" />
 
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Prijava</button>
 			
@@ -50,17 +50,17 @@
 				<h3 class="form-signin-heading">Registracija</h3>
 				
 				<input type="text" id="inputName" name="inputName" class="form-control" placeholder="Ime"
-					   onfocus="" required>
+					   onfocus="" required="true" />
 				<input type="text" id="inputSurname" name="inputSurname" class="form-control" placeholder="Prezime"
-					   onfocus="" required>
+					   onfocus="" required="true" />
 				<input type="text" id="inputBirthDate" name="inputBirthDate" class="form-control" placeholder="Datum rođenja"
-					   onfocus="" required>
+					   onfocus="" required="true" />
 				<input type="email" id="inputUserName" name="inputUserName" class="form-control" placeholder="Email"
-					   onfocus="" required>
+					   onfocus="" required="true" />
 				<input type="text" id="inputUserName" name="inputUserName" class="form-control" placeholder="Korisničko ime"
-					   onfocus="" required>
+					   onfocus="" required="true" />
 				<input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Šifra"
-					   onfocus="" required>
+					   onfocus="" required="true" />
 
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Registracija</button>
 			
