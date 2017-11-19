@@ -30,6 +30,13 @@ public class WebController {
 		return modelAndView;
 	}
 	
+	//ovo je za razvoj, kasnije izbrisati
+	@RequestMapping(value={"/home/test"}, method = RequestMethod.GET)
+	public ModelAndView hometest(){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("home");
+		return modelAndView;
+	}
 	
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
@@ -47,13 +54,13 @@ public class WebController {
 		if (userExists != null) {
 			bindingResult
 					.rejectValue("email", "error.user",
-							"There is already a user registered with the email provided");
+							"Korisnik sa unesenom email adresom već postoji!");
 		}
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("registration");
 		} else {
 			userService.saveUser(user);
-			modelAndView.addObject("successMessage", "User has been registered successfully");
+			modelAndView.addObject("successMessage", "Uspješno ste registrovani.");
 			modelAndView.addObject("user", new User());
 			modelAndView.setViewName("registration");
 			
