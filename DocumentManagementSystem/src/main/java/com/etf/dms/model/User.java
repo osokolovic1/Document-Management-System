@@ -24,28 +24,33 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
+	@Column(name = "ID")
 	private int id;
-	@Column(name = "email")
-	@Email(message = "*Please provide a valid Email")
-	@NotEmpty(message = "*Please provide an email")
-	private String email;
+	
+	@Column(name = "username")
+	@Length(min = 5, message = "Najmanja dužina korisničkog imena mora biti barem 5 alfanumeričkih znakova.")
+	@NotEmpty(message = "Molimo unesite korisničko ime.")
+	private String userName;
+	
 	@Column(name = "password")
-	@Length(min = 5, message = "*Your password must have at least 5 characters")
-	@NotEmpty(message = "*Please provide your password")
+	@Length(min = 5, message = "Najmanja dužina šifre mora biti barem 5 alfanumeričkih znakova.")
+	@NotEmpty(message = "Molimo unesite šifru.")
 	@Transient
 	private String password;
-	@Column(name = "name")
-	@NotEmpty(message = "*Please provide your name")
+	
+	@Column(name = "ime")
+	@NotEmpty(message = "Molimo unesite ime.")
 	private String name;
-	@Column(name = "last_name")
-	@NotEmpty(message = "*Please provide your last name")
+	
+
+	@Column(name = "prezime")
+	@NotEmpty(message = "Molimo unesite prezime.")
 	private String lastName;
-	@Column(name = "active")
-	private int active;
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-	private Set<Role> roles;
+	
+	@Column(name = "email")
+	@Email(message = "Email nije validan!")
+	@NotEmpty(message = "Email nije validan")
+	private String email;
 
 	public int getId() {
 		return id;
@@ -53,6 +58,14 @@ public class User {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -86,21 +99,5 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public int getActive() {
-		return active;
-	}
-
-	public void setActive(int active) {
-		this.active = active;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
+	
 }

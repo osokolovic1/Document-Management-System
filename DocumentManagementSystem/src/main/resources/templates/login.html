@@ -13,15 +13,15 @@
 	<!--rel = stylesheet -->
     <!-- Custom styles for this template -->
     <link href="css/signin.css" rel="stylesheet" />
-	
+
   </head>
 
   <body>
 
     <div class="container">
 
-		<div id="loginbox">	
-			<form class="form-signin" id="loginForm" onsubmit="" th:action="@{/login}" method="post">
+		<div id="loginbox">
+			<form class="form-signin" id="loginForm" onsubmit="" th:action="@{/login}" method="post" role="form">
 				<h3 class="form-signin-heading">Molimo, prijavite se</h3>
 				<input type="email" id="inputUserName" name="inputUserName" class="form-control" placeholder="Email"
 					   onfocus="" required="true" />
@@ -29,60 +29,28 @@
 					   onfocus="" required="true" />
 
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Prijava</button>
-			
-				<div class="form-group">
-					<div class="col-md-12 control">
-						<div style="padding-top:15px; font-size:85%" > 
-							Ili, izvršite registraciju 
-							<a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
-								OVDJE 
-							</a>
-						</div>
-					</div>
-				
-				</div>
 			</form>
-		</div>
-		
-		<div id="signupbox" style="display:none">
-			<form class="form-signin" id="loginForm" onsubmit="" method="post" action="">
-			
-				<h3 class="form-signin-heading">Registracija</h3>
-				
-				<input type="text" id="inputName" name="inputName" class="form-control" placeholder="Ime"
-					   onfocus="" required="true" />
-				<input type="text" id="inputSurname" name="inputSurname" class="form-control" placeholder="Prezime"
-					   onfocus="" required="true" />
-				<input type="text" id="inputBirthDate" name="inputBirthDate" class="form-control" placeholder="Datum rođenja"
-					   onfocus="" required="true" />
-				<input type="email" id="inputUserName" name="inputUserName" class="form-control" placeholder="Email"
-					   onfocus="" required="true" />
-				<input type="text" id="inputUserName" name="inputUserName" class="form-control" placeholder="Korisničko ime"
-					   onfocus="" required="true" />
-				<input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Šifra"
-					   onfocus="" required="true" />
 
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Registracija</button>
-			
-				<div class="form-group">
-					<div class="col-md-12 control">
-						<div style="padding-top:15px; font-size:85%" > 
-							Imate korisnički račun? 
-							<a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Prijavite se</a>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-		
-		<div th:if="${param.error}">
-			<h3 style="color:red">Pogrešan email i/ili password</h3>
+      <form class="form-signin" id="switchToReg" th:action="@{/registration}" method="get">
+        <div class="form-group">
+          <div class="col-md-12 control">
+            <div style="padding-top:5px; font-size:85%">
+              Ili, izvršite registraciju
+              <a href="javascript:{}" onclick="document.getElementById('switchToReg').submit(); return false;">
+                OVDJE
+              </a>
+              .
+            </div>
+          </div>
+        </div>
+      </form>
+
 		</div>
 
     </div> <!-- /container -->
   </body>
-  
+
   <!--jQuery-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  
+
 </html>
