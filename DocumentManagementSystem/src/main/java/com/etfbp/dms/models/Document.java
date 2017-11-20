@@ -16,8 +16,8 @@ public class Document {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private Integer ID;
+	@Column(name = "id")
+	private Integer id;
 	
 	@Column(name = "Title")
 	private String title;
@@ -40,12 +40,12 @@ public class Document {
 	@Column(name = "owner_id")
 	private Integer ownerId;
 
-	public Integer getID() {
-		return ID;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setID(Integer iD) {
-		ID = iD;
+	public void setId(Integer Id) {
+		this.id = Id;
 	}
 
 	public String getTitle() {

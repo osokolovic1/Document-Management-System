@@ -23,9 +23,9 @@
 		<div id="loginbox">
 			<form class="form-signin" id="loginForm" onsubmit="" th:action="@{/login}" method="post" role="form">
 				<h3 class="form-signin-heading">Molimo, prijavite se</h3>
-				<input type="email" id="inputUserName" name="inputUserName" class="form-control" placeholder="Email"
+				<input type="email" id="inputUserName" th:name="emailLogin" class="form-control" placeholder="Email"
 					   onfocus="" required="true" />
-				<input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Šifra"
+				<input type="password" id="inputPassword" th:name="passwordLogin" class="form-control" placeholder="Šifra"
 					   onfocus="" required="true" />
 
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Prijava</button>

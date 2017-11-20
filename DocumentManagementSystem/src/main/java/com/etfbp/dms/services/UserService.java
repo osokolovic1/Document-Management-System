@@ -7,7 +7,7 @@ import com.etfbp.dms.models.User;
 import com.etfbp.dms.repo.UserRepository;
 
 @Service
-public class UserService{
+public class UserService {
 	
 	@Autowired
 	UserRepository userRepository;

@@ -1,7 +1,5 @@
 package com.etfbp.dms.models;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,12 +28,12 @@ public class Role {
 		this.role = role;
 	}
 
-	public Integer getID() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setID(Integer iD) {
-		id = iD;
+	public void setID(Integer Id) {
+		this.id = Id;
 	}
 
 	public String getRole() {

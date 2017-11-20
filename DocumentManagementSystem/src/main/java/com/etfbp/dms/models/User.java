@@ -10,13 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users", schema = "public")
+@Table(name = "users")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer ID;
+	private Integer id;
 	
 	@Column(name = "username")
 	private String userName;
@@ -34,16 +34,16 @@ public class User {
 	@Column(name = "email")
 	private String email;
 	
-	@Column(name = "role_id")
+	@Column(name = "role_ID")
 	private Integer roleID;
 
 
 	public Integer getID() {
-		return ID;
+		return id;
 	}
 
-	public void setID(Integer iD) {
-		ID = iD;
+	public void setID(Integer Id) {
+		this.id = Id;
 	}
 
 	public String getUserName() {
