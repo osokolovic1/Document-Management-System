@@ -1,6 +1,5 @@
 package com.etfbp.dms.models;
 
-import java.io.Serializable;
 import java.security.Timestamp;
 
 import javax.persistence.Column;
@@ -9,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import ch.qos.logback.classic.Logger;
 
 
 @Entity

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.etfbp.dms.models.User;
 import com.etfbp.dms.repo.UserRepository;
+import com.etfbp.dms.services.UserService;
  
  
  
@@ -19,7 +20,7 @@ import com.etfbp.dms.repo.UserRepository;
 public class WebController {
  
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 	
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	
@@ -43,9 +44,9 @@ public class WebController {
         								user.getID(), user.getName(), user.getLastName());
         log.info(info);
         
-        userRepository.save(user);
+        userService.registerUser(user);
                 
-        return "home";
+        return "login";
     }
     
     
