@@ -43,7 +43,7 @@ public class WebController {
     		model.addAttribute(user);
     		return "home";    	
     	} else {
-    		model.addAttribute("message","Wrong password.")
+    		model.addAttribute("message","Wrong password.");
     		return "login";
     	}
     }
