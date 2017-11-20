@@ -22,19 +22,19 @@ public class Document {
 	@Column(name = "Title")
 	private String title;
 	
-	@Column(name = "CreationTime")
+	@Column(name = "creation_time")
 	private Timestamp creationTime;
 	
-	@Column(name = "Modified")
+	@Column(name = "modified")
 	private Timestamp modified;
 	
-	@Column(name = "Sadrzaj")
+	@Column(name = "sadrzaj")
 	private byte[] sadrzaj;
 	
-	@Column(name = "GuestRead")
+	@Column(name = "guest_read")
 	private Boolean guestRead;
 	
-	@Column(name = "Visible")
+	@Column(name = "visible")
 	private Boolean visible;
 	
 	@Column(name = "owner_id")

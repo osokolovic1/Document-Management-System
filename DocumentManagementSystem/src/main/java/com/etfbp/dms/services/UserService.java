@@ -7,7 +7,7 @@ import com.etfbp.dms.models.User;
 import com.etfbp.dms.repo.UserRepository;
 
 @Service
-public class UserService {
+public class UserService{
 	
 	@Autowired
 	UserRepository userRepository;
@@ -16,6 +16,10 @@ public class UserService {
 		//ovdje uraditi validaciju
 		userRepository.save(user);
 		return true;
+	}
+	
+	public User findUserByEmail(String email) {
+		return userRepository.findUserByEmail(email);
 	}
 
 }

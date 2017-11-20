@@ -30,6 +30,23 @@ public class WebController {
         return "login";
     }
     
+    @RequestMapping(value={"/login"}, method = RequestMethod.POST)
+    public String login(Model model, @RequestParam("inputUserName") String email, @RequestParam("inputPassword") String pass) {
+    	User user = userService.findUserByEmail(email);
+    	
+    	if(user == null) {
+    		model.addAttribute("message","Bad email.");
+    		return "login";
+    	}
+    	
+    	if(user.getPassword().equals(pass)) {
+    		model.addAttribute(user);
+    		return "home";    	
+    	} else {
+    		model.addAttribute("message","Wrong password.")
+    		return "login";
+    	}
+    }
     @RequestMapping(value= "/registration", method=RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("user", new User());
