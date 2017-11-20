@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.etf</groupId>
-	<artifactId>DocumentManagementSystem</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>com.etfbp</groupId>
+	<artifactId>documentmsbp</artifactId>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>DocumentManagementSystem</name>
-	<description>Projekat iz Baza podataka</description>
+	<description>documentmsbp</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -27,7 +27,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -47,25 +47,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-		 	<groupId>org.webjars</groupId>
- 			<artifactId>bootstrap</artifactId>
- 			<version>3.2.0</version>
-		 </dependency>
-		 <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-   			<groupId>net.sourceforge.nekohtml</groupId>
-   			<artifactId>nekohtml</artifactId>
-  			<version>1.9.21</version>
 		</dependency>
 	</dependencies>
 

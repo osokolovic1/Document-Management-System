@@ -1,4 +1,4 @@
-package com.etf.dms;
+package com.etfbp.dms;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

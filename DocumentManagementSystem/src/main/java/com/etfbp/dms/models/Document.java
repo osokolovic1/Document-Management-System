@@ -1,5 +1,6 @@
-package com.etf.dms.model;
+package com.etfbp.dms.models;
 
+import java.io.Serializable;
 import java.security.Timestamp;
 
 import javax.persistence.Column;
@@ -9,13 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import ch.qos.logback.classic.Logger;
+
+
 @Entity
-@Table(name = "Documents")
-public class Documents {
+@Table(name = "documents")
+public class Document {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private Integer ID;
 	
 	@Column(name = "Title")
 	private String title;
@@ -26,10 +31,8 @@ public class Documents {
 	@Column(name = "Modified")
 	private Timestamp modified;
 	
-	
-	//Baza vraca hex string koji ce biti potrebno konvertovati
 	@Column(name = "Sadrzaj")
-	private String sadrzaj;
+	private byte[] sadrzaj;
 	
 	@Column(name = "GuestRead")
 	private Boolean guestRead;
@@ -38,14 +41,14 @@ public class Documents {
 	private Boolean visible;
 	
 	@Column(name = "owner_id")
-	private int owner_id;
-	
-	public int getId() {
-		return id;
+	private Integer ownerId;
+
+	public Integer getID() {
+		return ID;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setID(Integer iD) {
+		ID = iD;
 	}
 
 	public String getTitle() {
@@ -72,11 +75,11 @@ public class Documents {
 		this.modified = modified;
 	}
 
-	public String getSadrzaj() {
+	public byte[] getSadrzaj() {
 		return sadrzaj;
 	}
 
-	public void setSadrzaj(String sadrzaj) {
+	public void setSadrzaj(byte[] sadrzaj) {
 		this.sadrzaj = sadrzaj;
 	}
 
@@ -96,12 +99,32 @@ public class Documents {
 		this.visible = visible;
 	}
 
-	public int getOwner_id() {
-		return owner_id;
+	public Integer getOwnerId() {
+		return ownerId;
 	}
 
-	public void setOwner_id(int owner_id) {
-		this.owner_id = owner_id;
+	public void setOwnerId(Integer ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public Document() {
+
+	}
+
+	public Document(String title, Timestamp creationTime, Timestamp modified, byte[] sadrzaj, Boolean guestRead,
+			Boolean visible, Integer ownerId) {
+		super();
+		this.title = title;
+		this.creationTime = creationTime;
+		this.modified = modified;
+		this.sadrzaj = sadrzaj;
+		this.guestRead = guestRead;
+		this.visible = visible;
+		this.ownerId = ownerId;
 	}
 	
+	
+	
+	
+
 }

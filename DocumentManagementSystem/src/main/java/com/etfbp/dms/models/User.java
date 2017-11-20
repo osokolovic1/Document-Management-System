@@ -1,63 +1,49 @@
-package com.etf.dms.model;
+package com.etfbp.dms.models;
 
-import java.util.Set;
+import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.Transient;
-
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private Integer ID;
 	
 	@Column(name = "username")
-	@Length(min = 5, message = "Najmanja dužina korisničkog imena mora biti barem 5 alfanumeričkih znakova.")
-	@NotEmpty(message = "Molimo unesite korisničko ime.")
 	private String userName;
 	
 	@Column(name = "password")
-	@Length(min = 5, message = "Najmanja dužina šifre mora biti barem 5 alfanumeričkih znakova.")
-	@NotEmpty(message = "Molimo unesite šifru.")
-	@Transient
 	private String password;
 	
 	@Column(name = "ime")
-	@NotEmpty(message = "Molimo unesite ime.")
 	private String name;
 	
 
 	@Column(name = "prezime")
-	@NotEmpty(message = "Molimo unesite prezime.")
 	private String lastName;
 	
 	@Column(name = "email")
-	@Email(message = "Email nije validan!")
-	@NotEmpty(message = "Email nije validan")
 	private String email;
+	
+	@Column(name = "role_ID")
+	private Integer roleID;
 
-	public int getId() {
-		return id;
+
+	public Integer getID() {
+		return ID;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setID(Integer iD) {
+		ID = iD;
 	}
 
 	public String getUserName() {
@@ -99,5 +85,29 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Integer getRoleID() {
+		return roleID;
+	}
+
+	public void setRoleID(Integer roleID) {
+		this.roleID = roleID;
+	}
+
+	public User() {
+		
+	}
+	
+	public User(String userName, String password, String name, String lastName, String email, Integer role) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.name = name;
+		this.lastName = lastName;
+		this.email = email;
+		this.roleID = role;
+	}
+	
+	
 	
 }

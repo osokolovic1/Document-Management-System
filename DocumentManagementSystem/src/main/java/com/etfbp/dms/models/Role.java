@@ -1,4 +1,6 @@
-package com.etf.dms.model;
+package com.etfbp.dms.models;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,28 +9,42 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name = "Roles")
+@Table(name = "roles")
 public class Role {
+	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="ID")
-	private int id;
-	@Column(name="role")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private Integer ID;
+	
+	@Column(name = "role")
 	private String role;
 	
-	public int getId() {
-		return id;
+	public Role() {
+		
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public Role(String role) {
+		this.role = role;
 	}
+
+	public Integer getID() {
+		return ID;
+	}
+
+	public void setID(Integer iD) {
+		ID = iD;
+	}
+
 	public String getRole() {
 		return role;
 	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}
 	
-	
+
 }

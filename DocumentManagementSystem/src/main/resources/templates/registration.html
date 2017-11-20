@@ -24,81 +24,36 @@
         <form class="form-signin" id="loginForm" onsubmit="" th:action="@{/registration}"
           th:object="${user}" method="post" role="form">
   				<h3 class="form-signin-heading">Molimo, unesite tražene podatke</h3>
+
           <input type="text" th:field="*{userName}" placeholder="Korisničko ime"
               class="form-control" required="true" />
-          <input type="text" th:field="*{password}"
+					<label th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
+							class="validation-message"></label>
+
+          <input type="password" th:field="*{password}"
               placeholder="Šifra" class="form-control" required="true" />
+					<label	th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+							class="validation-message"></label>
+
 					<input type="text" th:field="*{name}"
 							placeholder="Ime" class="form-control" required="true" />
+					<label	th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+							class="validation-message"></label>
+
 					<input type="text" th:field="*{lastName}"
 							placeholder="Prezime" class="form-control" required="true" />
+					<label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+							class="validation-message"></label>
+
           <input type="text" th:field="*{email}" placeholder="Email"
               class="form-control" required="true" />
+					<label	th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+							class="validation-message"></label>
 
   				<button class="btn btn-lg btn-primary btn-block" style="padding-top: 10px" type="submit">
 						Registracija
 					</button>
   			</form>
-
-<!-- OVO ISPOD UBACITI GORE-->
-
-		<!--		<form autocomplete="off" action="#" th:action="@{/registration}"
-					th:object="${user}" method="post" class="form-horizontal"
-					role="form">
-					<h2>Registration Form</h2>
-					<div class="form-group">
-						<div class="col-sm-9">
-						<label th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
-								class="validation-message"></label>
-						<input type="text" th:field="*{userName}" placeholder="Name"
-								class="form-control" />
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-9">
-						<label	th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-								class="validation-message"></label>
-							<input type="text" th:field="*{password}"
-								placeholder="Last Name" class="form-control" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{email}" placeholder="Email"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-								class="validation-message"></label>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{birthDate}"
-								placeholder="Password" class="form-control" /> <label
-								th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"
-								class="validation-message"></label>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" id="regDate" th:field="*{registrationDate}"
-								placeholder="Password" class="form-control" /> <label
-								th:if="${#fields.hasErrors('registrationDate')}" th:errors="*{registrationDate}"
-								class="validation-message"></label>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">Register User</button>
-						</div>
-					</div>
-
-					<span th:utext="${successMessage}"></span>
-
-
-				</form>   -->
 
         <form class="form-signin" id="switchToLog" th:action="@{/}" method="get">
           <div class="form-group">
@@ -113,6 +68,9 @@
             </div>
           </div>
         </form>
+
+
+				<span th:utext="${successMessage}"></span>
 
 			</div>
 
