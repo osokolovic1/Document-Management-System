@@ -88,7 +88,7 @@ public class Document {
         this.content = content;
     }
  
- 
+    public Document() {}
     public Document(Integer userId, String name, String description, String type, byte[] content) {
 		super();
 		this.userId = userId;

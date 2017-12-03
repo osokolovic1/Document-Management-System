@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <title>Document Management System</title>
+   <!-- Bootstrap -->
+   <link href= "../css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+   <!--Font Awesome-->
+   <link href="../css/bootstrap/font-awesome.min.css" rel="stylesheet" />
+   <!--Sidebar-->
+   <link href="../css/sidebar.css" rel="stylesheet" />
+   <!--Custom css-->
+   <link href="../css/signin.css" rel="stylesheet" />
+   <link href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet" />
+ </head>
+
+ <body>
+   		<table>
+        	<tr>
+                <th>File Name</th>
+                <th width="100"></th>
+                <th width="100"></th>
+             </tr>
+             <tr th:each="document : ${documents}">
+                <tr>
+                   <td th:text="${document.name}"></td>
+                 </tr>
+                 <td><a href="/download-document-2-${document.id}" >download</a></td>
+              </tr>
+                
+		</table>
+		
+                <form method="POST" enctype="multipart/form-data" th:action="@{/add-document-1}">
+						<table>
+							<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+							<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+						</table>
+					</form>
+               
+        
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="../js/bootstrap.min.js"></script>
+  <script>
+      $(document).ready(function(){
+          $('[data-toggle="popover"]').popover();
+      });
+  </script>
+
+ </body>
+</html>
