@@ -87,6 +87,10 @@ public class Document {
     public void setContent(byte[] content) {
         this.content = content;
     }
+    
+    public Document() {
+    	
+    }
  
  
     public Document(Integer userId, String name, String description, String type, byte[] content) {

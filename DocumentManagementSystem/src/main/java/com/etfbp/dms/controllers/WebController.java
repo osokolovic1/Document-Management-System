@@ -100,11 +100,15 @@ public class WebController {
                 
         return "login";
     }
-    @RequestMapping(value = { "/add-document-{userId}" }, method = RequestMethod.GET)
-    public String addDocuments(@PathVariable int userId, ModelMap model) {
-        User user = userService.findById(userId);
-        model.addAttribute("user", user);
- 
+    
+    
+    @RequestMapping(value = { "/add-document" }, method = RequestMethod.GET)
+    public String addDocuments(ModelMap model, HttpSession session) {
+    	
+    	int userId = (int)session.getAttribute("userid");
+    	User user = userService.findById(userId);
+    	model.addAttribute("user", user);
+    	 
         FileBucket fileModel = new FileBucket();
         model.addAttribute("fileBucket", fileModel);
  
@@ -114,12 +118,16 @@ public class WebController {
         return "managedocuments";
     }
     
-    @RequestMapping(value = { "/add-document-{userId}" }, method = RequestMethod.POST)
-    public String uploadDocument(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @PathVariable int userId, @RequestParam("file") MultipartFile file) throws IOException{
+    @RequestMapping(value = { "/add-document" }, method = RequestMethod.POST)
+    public String uploadDocument(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @RequestParam("file") MultipartFile file, HttpSession session) throws IOException{
          
+    	int userId = (int)session.getAttribute("userid");
+    	User user = userService.findById(userId);
+    	model.addAttribute(user);
+    	
         if (result.hasErrors()) {
             System.out.println("validation errors");
-            User user = userService.findById(userId);
+            
             model.addAttribute("user", user);
  
             List<Document> documents = documentService.findAllByUserId(userId);
@@ -130,20 +138,18 @@ public class WebController {
              
             System.out.println("Fetching file");
              
-            User user = userService.findById(userId);
             model.addAttribute("user", user);
             fileBucket.setFile(file);
             saveDocument(fileBucket, user);
  
-            return "redirect:/add-document-"+userId;
+            return "redirect:/add-document";
         }
     }
-    private void saveDocument(FileBucket fileBucket, User user) throws IOException{
-        
-        
-         
+    
+    
+    private void saveDocument(FileBucket fileBucket, User user) throws IOException{    
         MultipartFile multipartFile = fileBucket.getFile();
-        Document document = new Document(2,
+        Document document = new Document(user.getID(),
         							multipartFile.getOriginalFilename(),
         							fileBucket.getDescription(),
         							multipartFile.getContentType(),
