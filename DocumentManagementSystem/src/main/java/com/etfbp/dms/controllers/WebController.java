@@ -1,5 +1,8 @@
 package com.etfbp.dms.controllers;
  
+import javax.servlet.http.HttpSession;
+
+import org.apache.coyote.http11.Http11AprProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +35,24 @@ public class WebController {
     
     @RequestMapping(value = {"/login", "/"}, method = RequestMethod.POST)
     public String login(Model model, @RequestParam(value="emailLogin") String email, 
-    		@RequestParam(value="passwordLogin") String password) {
+    		@RequestParam(value="passwordLogin") String password, HttpSession session) {
     	User user = userService.findUserByEmail(email);
     	
     	String view = "";
     	
     	if (user != null) {
     		if (password.equals(user.getPassword())) {
+    			
+       			//user login success
+    			//potrebno je spremiti u sesiju podatke
+    			session.setAttribute("userid", user.getID());
+    			session.setAttribute("username", user.getUserName());
+    			session.setAttribute("password", user.getPassword());
+    			session.setAttribute("name", user.getName());
+    			session.setAttribute("lastname", user.getLastName());
+    			session.setAttribute("email", user.getEmail());
+    			session.setAttribute("roleid", user.getRoleID());
+    			
     			view = "home";
     		}
     		else {
