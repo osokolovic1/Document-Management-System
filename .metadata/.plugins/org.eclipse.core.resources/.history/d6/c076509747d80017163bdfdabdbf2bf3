@@ -24,26 +24,24 @@
                 <th width="100"></th>
                 <th width="100"></th>
              </tr>
-             
-             <tr th:each="document : ${documents}">
-             	<div th:with="docId=${document.id}">
+             <div <!--th:if="${not #lists.isEmpty(documents)}" th:if="${document.id != null}" -->>
+ 				<tr th:each="document : ${documents}" th:if="${document.id != null}">
                 <tr>
+                
                    <td th:text="${document.name}"></td>
                    <td>
-                   		<a th:href="@{'/download-my-document-' + ${document.id}}">download</a>
+                   		<a th:href="@{'/download-document-' + ${document.id}}">download</a>
+                   </td>
+                   <td>
+                   		<a th:href="@{'/delete-my-document-' + ${document.id}}">delete</a>
                    </td>
                  </tr>
-                </div>
               </tr>
+			</div>
+             
+             
                 
 		</table>
-		
-                <form method="POST" enctype="multipart/form-data" th:action="@{/add-document}">
-						<table>
-							<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-							<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
-						</table>
-					</form>
                
         
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

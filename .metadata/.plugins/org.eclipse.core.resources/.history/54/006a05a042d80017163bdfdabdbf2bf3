@@ -115,39 +115,6 @@ public class WebController {
         return "redirect:/add-document-"+ (int)session.getAttribute("userid");
     }
     
-    @RequestMapping(value = { "/download-my-document-{docId}" }, method = RequestMethod.GET)
-    public String downloadMyDocument(@PathVariable String docId, HttpServletResponse response, HttpSession session) throws IOException {
-        Document document = documentService.findById(Integer.parseInt(docId));
-        response.setContentType(document.getType());
-        response.setContentLength(document.getContent().length);
-        response.setHeader("Content-Disposition","attachment; filename=\"" + document.getName() +"\"");
-  
-        FileCopyUtils.copy(document.getContent(), response.getOutputStream());
-  
-        return "redirect:/my-documents";
-    }
-    @RequestMapping(value = { "/delete-my-document-{docId}" }, method = RequestMethod.GET)
-    public String deleteDocument(@PathVariable String docId) {
-        documentService.deleteById(Integer.parseInt(docId));
-        return "redirect:/my-documents";
-    }
-    
-    @RequestMapping(value = { "/my-documents" }, method = RequestMethod.GET)
-    public String myDocuments(ModelMap model, HttpSession session) {
-    	
-    	int userId = (int)session.getAttribute("userid");
-    	User user = userService.findById(userId);
-    	model.addAttribute("user", user);
-    	 
-        FileBucket fileModel = new FileBucket();
-        model.addAttribute("fileBucket", fileModel);
- 
-        List<Document> documents = documentService.findAllByUserId(userId);
-        model.addAttribute("documents", documents);
-        System.out.print(documents.get(0).getId());
-        return "myDocuments";
-    }
-    
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.GET)
     public String addDocuments(ModelMap model, HttpSession session) {
     	
@@ -176,7 +143,7 @@ public class WebController {
             
             model.addAttribute("user", user);
  
-            List<Document> documents = documentService.findAll();
+            List<Document> documents = documentService.findAllByUserId(userId);
             model.addAttribute("documents", documents);
              
             return "managedocuments";

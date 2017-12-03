@@ -126,11 +126,6 @@ public class WebController {
   
         return "redirect:/my-documents";
     }
-    @RequestMapping(value = { "/delete-my-document-{docId}" }, method = RequestMethod.GET)
-    public String deleteDocument(@PathVariable String docId) {
-        documentService.deleteById(Integer.parseInt(docId));
-        return "redirect:/my-documents";
-    }
     
     @RequestMapping(value = { "/my-documents" }, method = RequestMethod.GET)
     public String myDocuments(ModelMap model, HttpSession session) {

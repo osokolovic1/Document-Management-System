@@ -51,7 +51,7 @@
 
             <li>
               <ul class="sub-menu collapse" id="dokumenti">
-                <li><a href="/my-documents">Moji dokumenti</a></li>
+                <li><a href="#">Moji dokumenti</a></li>
                 <li><a href="http://localhost:8181/add-document">Dodavanje dokumenata</a></li>
               </ul>
             </li>

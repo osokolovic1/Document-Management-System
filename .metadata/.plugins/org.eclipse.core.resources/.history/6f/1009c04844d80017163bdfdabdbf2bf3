@@ -115,23 +115,6 @@ public class WebController {
         return "redirect:/add-document-"+ (int)session.getAttribute("userid");
     }
     
-    @RequestMapping(value = { "/download-my-document-{docId}" }, method = RequestMethod.GET)
-    public String downloadMyDocument(@PathVariable String docId, HttpServletResponse response, HttpSession session) throws IOException {
-        Document document = documentService.findById(Integer.parseInt(docId));
-        response.setContentType(document.getType());
-        response.setContentLength(document.getContent().length);
-        response.setHeader("Content-Disposition","attachment; filename=\"" + document.getName() +"\"");
-  
-        FileCopyUtils.copy(document.getContent(), response.getOutputStream());
-  
-        return "redirect:/my-documents";
-    }
-    @RequestMapping(value = { "/delete-my-document-{docId}" }, method = RequestMethod.GET)
-    public String deleteDocument(@PathVariable String docId) {
-        documentService.deleteById(Integer.parseInt(docId));
-        return "redirect:/my-documents";
-    }
-    
     @RequestMapping(value = { "/my-documents" }, method = RequestMethod.GET)
     public String myDocuments(ModelMap model, HttpSession session) {
     	

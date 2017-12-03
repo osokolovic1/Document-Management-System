@@ -30,20 +30,13 @@
                 <tr>
                    <td th:text="${document.name}"></td>
                    <td>
-                   		<a th:href="@{'/download-my-document-' + ${document.id}}">download</a>
+                   		<a th:href="@{'/download-document-' + ${document.id}}">download</a>
                    </td>
                  </tr>
                 </div>
               </tr>
                 
 		</table>
-		
-                <form method="POST" enctype="multipart/form-data" th:action="@{/add-document}">
-						<table>
-							<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-							<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
-						</table>
-					</form>
                
         
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

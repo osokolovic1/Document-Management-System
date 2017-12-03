@@ -31,6 +31,7 @@
                    <td th:text="${document.name}"></td>
                    <td>
                    		<a th:href="@{'/download-my-document-' + ${document.id}}">download</a>
+                   		<a th:href="@{'/delete-document-' + ${document.id}'>delete</a>
                    </td>
                  </tr>
                 </div>

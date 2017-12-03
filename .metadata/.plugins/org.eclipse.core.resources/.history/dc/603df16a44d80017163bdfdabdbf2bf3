@@ -30,7 +30,7 @@
                 <tr>
                    <td th:text="${document.name}"></td>
                    <td>
-                   		<a th:href="@{'/download-my-document-' + ${document.id}}">download</a>
+                   		<a th:href="@{'/download-document-' + ${document.id}}">download</a>
                    </td>
                  </tr>
                 </div>
