@@ -24,16 +24,12 @@
                 <th width="100"></th>
                 <th width="100"></th>
              </tr>
-             
              <tr th:each="document : ${documents}">
-             	<div th:with="docId=${document.id}">
                 <tr>
                    <td th:text="${document.name}"></td>
-                   <td>
-                   		<a th:href="@{'/download-document-' + ${document.id}}">download</a>
-                   </td>
+                   <td><a href="/download-document-2-2" >download</a></td>
                  </tr>
-                </div>
+                 
               </tr>
                 
 		</table>

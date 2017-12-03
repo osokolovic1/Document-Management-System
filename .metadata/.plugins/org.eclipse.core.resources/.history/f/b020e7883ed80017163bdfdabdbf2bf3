@@ -29,6 +29,7 @@
              	<div th:with="docId=${document.id}">
                 <tr>
                    <td th:text="${document.name}"></td>
+                   <td th:text="${document.id}"></td>
                    <td>
                    		<a th:href="@{'/download-document-' + ${document.id}}">download</a>
                    </td>

@@ -103,16 +103,16 @@ public class WebController {
         return "login";
     }
     
-    @RequestMapping(value = { "/download-document-{docId}" }, method = RequestMethod.GET)
-    public String downloadDocument(@PathVariable String docId, HttpServletResponse response, HttpSession session) throws IOException {
-        Document document = documentService.findById(Integer.parseInt(docId));
+    @RequestMapping(value = { "/download-document-{userId}-{docId}" }, method = RequestMethod.GET)
+    public String downloadDocument(@PathVariable int userId, @PathVariable int docId, HttpServletResponse response) throws IOException {
+        Document document = documentService.findById(docId);
         response.setContentType(document.getType());
         response.setContentLength(document.getContent().length);
         response.setHeader("Content-Disposition","attachment; filename=\"" + document.getName() +"\"");
   
         FileCopyUtils.copy(document.getContent(), response.getOutputStream());
   
-        return "redirect:/add-document-"+ (int)session.getAttribute("userid");
+        return "redirect:/add-document-"+userId;
     }
     
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.GET)
