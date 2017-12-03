@@ -2,126 +2,108 @@ package com.etfbp.dms.models;
 
 import java.security.Timestamp;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "documents")
+@Table(name = "document", schema = "public")
 public class Document {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name="identifier", sequenceName="doc_seq", allocationSize=1)  
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="identifier")
 	@Column(name = "id")
-	private Integer id;
+    private Integer id; 
 	
-	@Column(name = "Title")
-	private String title;
-	
-	@Column(name = "creation_time")
-	private Timestamp creationTime;
-	
-	@Column(name = "modified")
-	private Timestamp modified;
-	
-	@Column(name = "sadrzaj")
-	private byte[] sadrzaj;
-	
-	@Column(name = "guest_read")
-	private Boolean guestRead;
-	
-	@Column(name = "visible")
-	private Boolean visible;
-	
-	@Column(name = "owner_id")
-	private Integer ownerId;
+	@Column(name="user_id", nullable=false)
+    private Integer userId;
+     
+    @Column(name="name", length=100, nullable=false)
+    private String name;
 
-	public Integer getId() {
-		return id;
+	@Column(name="description", length=255)
+    private String description;
+     
+    @Column(name="type", length=100, nullable=false)
+    private String type;
+     
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(name="content", nullable=false)
+    private byte[] content;
+     
+     
+    public Integer getId() {
+        return id;
+    }
+ 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public Integer getUserId() {
+		return userId;
 	}
 
-	public void setId(Integer Id) {
-		this.id = Id;
+	public void setUserId(Integer useriId) {
+		this.userId = userId;
 	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public Timestamp getCreationTime() {
-		return creationTime;
-	}
-
-	public void setCreationTime(Timestamp creationTime) {
-		this.creationTime = creationTime;
-	}
-
-	public Timestamp getModified() {
-		return modified;
-	}
-
-	public void setModified(Timestamp modified) {
-		this.modified = modified;
-	}
-
-	public byte[] getSadrzaj() {
-		return sadrzaj;
-	}
-
-	public void setSadrzaj(byte[] sadrzaj) {
-		this.sadrzaj = sadrzaj;
-	}
-
-	public Boolean getGuestRead() {
-		return guestRead;
-	}
-
-	public void setGuestRead(Boolean guestRead) {
-		this.guestRead = guestRead;
-	}
-
-	public Boolean getVisible() {
-		return visible;
-	}
-
-	public void setVisible(Boolean visible) {
-		this.visible = visible;
-	}
-
-	public Integer getOwnerId() {
-		return ownerId;
-	}
-
-	public void setOwnerId(Integer ownerId) {
-		this.ownerId = ownerId;
-	}
-
-	public Document() {
-
-	}
-
-	public Document(String title, Timestamp creationTime, Timestamp modified, byte[] sadrzaj, Boolean guestRead,
-			Boolean visible, Integer ownerId) {
+ 
+    public String getName() {
+        return name;
+    }
+ 
+    public void setName(String name) {
+        this.name = name;
+    }
+ 
+    public String getDescription() {
+        return description;
+    }
+ 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+ 
+    public String getType() {
+        return type;
+    }
+ 
+    public void setType(String type) {
+        this.type = type;
+    }
+ 
+    public byte[] getContent() {
+        return content;
+    }
+ 
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
+ 
+ 
+    public Document(Integer userId, String name, String description, String type, byte[] content) {
 		super();
-		this.title = title;
-		this.creationTime = creationTime;
-		this.modified = modified;
-		this.sadrzaj = sadrzaj;
-		this.guestRead = guestRead;
-		this.visible = visible;
-		this.ownerId = ownerId;
+		this.userId = userId;
+		this.name = name;
+		this.description = description;
+		this.type = type;
+		this.content = content;
 	}
-	
-	
-	
-	
-
+    
+    @Override
+    public String toString() {
+        return "UserDocument [id=" + id + ", name=" + name + ", description="
+                + description + ", type=" + type + "]";
+    }
+ 
+ 
+     
 }

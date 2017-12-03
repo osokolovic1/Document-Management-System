@@ -1,6 +1,10 @@
 package com.etfbp.dms.controllers;
  
+import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.coyote.http11.Http11AprProtocol;
 import org.slf4j.Logger;
@@ -8,13 +12,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.etfbp.dms.models.Document;
+import com.etfbp.dms.models.FileBucket;
 import com.etfbp.dms.models.User;
 import com.etfbp.dms.repo.UserRepository;
+import com.etfbp.dms.services.DocumentService;
 import com.etfbp.dms.services.UserService;
  
  
@@ -24,6 +35,9 @@ public class WebController {
  
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	DocumentService documentService;
 	
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	
@@ -86,6 +100,57 @@ public class WebController {
                 
         return "login";
     }
+    @RequestMapping(value = { "/add-document-{userId}" }, method = RequestMethod.GET)
+    public String addDocuments(@PathVariable int userId, ModelMap model) {
+        User user = userService.findById(userId);
+        model.addAttribute("user", user);
+ 
+        FileBucket fileModel = new FileBucket();
+        model.addAttribute("fileBucket", fileModel);
+ 
+        List<Document> documents = documentService.findAllByUserId(userId);
+        model.addAttribute("documents", documents);
+         
+        return "managedocuments";
+    }
     
+    @RequestMapping(value = { "/add-document-{userId}" }, method = RequestMethod.POST)
+    public String uploadDocument(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @PathVariable int userId, @RequestParam("file") MultipartFile file) throws IOException{
+         
+        if (result.hasErrors()) {
+            System.out.println("validation errors");
+            User user = userService.findById(userId);
+            model.addAttribute("user", user);
+ 
+            List<Document> documents = documentService.findAllByUserId(userId);
+            model.addAttribute("documents", documents);
+             
+            return "managedocuments";
+        } else {
+             
+            System.out.println("Fetching file");
+             
+            User user = userService.findById(userId);
+            model.addAttribute("user", user);
+            fileBucket.setFile(file);
+            saveDocument(fileBucket, user);
+ 
+            return "redirect:/add-document-"+userId;
+        }
+    }
+    private void saveDocument(FileBucket fileBucket, User user) throws IOException{
+        
+        
+         
+        MultipartFile multipartFile = fileBucket.getFile();
+        Document document = new Document(2,
+        							multipartFile.getOriginalFilename(),
+        							fileBucket.getDescription(),
+        							multipartFile.getContentType(),
+        							multipartFile.getBytes()
+        							);
+        documentService.saveDocument(document);
+        System.out.println(document.getId());
+    }
     
 }

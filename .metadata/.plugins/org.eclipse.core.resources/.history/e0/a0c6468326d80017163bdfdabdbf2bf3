@@ -1,0 +1,5 @@
+package com.etfbp.dms.services;
+
+public class DocumentService {
+
+}

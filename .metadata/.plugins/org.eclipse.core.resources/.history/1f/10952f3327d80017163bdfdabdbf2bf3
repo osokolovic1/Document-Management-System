@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <title>Document Management System</title>
+   <!-- Bootstrap -->
+   <link href= "../css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+   <!--Font Awesome-->
+   <link href="../css/bootstrap/font-awesome.min.css" rel="stylesheet" />
+   <!--Sidebar-->
+   <link href="../css/sidebar.css" rel="stylesheet" />
+   <!--Custom css-->
+   <link href="../css/signin.css" rel="stylesheet" />
+   <link href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet" />
+ </head>
+
+ <body>
+   <div class="nav-side-menu">
+      <div class="brand">DocumentMS</div>
+      <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+        <div class="menu-list">
+          <ul id="menu-content" class="menu-content collapse out">
+            <li data-toggle="collapse" data-target="#profil" class="collapsed">
+              <a href="#"><i class="fa fa-user fa-lg"></i> Profil <span class="arrow"></span></a>
+            </li>
+            <li>
+              <ul class="sub-menu collapse" id="profil">
+                <li><a href="#">Prikaz podataka</a></li>
+                <li><a href="#">Promjena šifre</a></li>
+                <li><a href="#">Odjavi se</a></li>
+              </ul>
+            </li>
+
+            <li data-toggle="collapse" data-target="#news" class="collapsed">
+              <a href="#"><i class="fa fa-newspaper-o fa-lg"></i> Novosti <span class="arrow"></span></a>
+            </li>
+            <li>
+              <ul class="sub-menu collapse" id="news">
+                <li><a href="#">Pregled novosti</a></li>
+                <li><a href="#">Objavljivanje novosti</a></li>
+              </ul>
+            </li>
+
+            <li data-toggle="collapse" data-target="#dokumenti" class="collapsed">
+              <a href="#"><i class="fa fa-file fa-lg"></i> Dokumenti <span class="arrow"></span></a>
+            </li>
+
+            <li>
+              <ul class="sub-menu collapse" id="dokumenti">
+                <li><a href="#">Moji dokumenti</a></li>
+                <li><a href="#">Dodavanje dokumenata</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="#">
+                <i class="fa fa-send fa-lg"></i> Kontaktiranje
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+  <div class="col-xs-offset-2 col-xs-9" id="subpage">
+
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="../js/bootstrap.min.js"></script>
+  <script>
+      $(document).ready(function(){
+          $('[data-toggle="popover"]').popover();
+      });
+  </script>
+
+ </body>
+</html>

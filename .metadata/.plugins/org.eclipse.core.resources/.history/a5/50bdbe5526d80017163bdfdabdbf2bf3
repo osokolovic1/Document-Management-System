@@ -1,0 +1,5 @@
+package com.etfbp.dms.models;
+
+public class FileBucket {
+
+}
