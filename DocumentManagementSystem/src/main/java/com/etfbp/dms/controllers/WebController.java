@@ -165,7 +165,8 @@ public class WebController {
     }
     
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.POST)
-    public String uploadDocument(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @RequestParam("file") MultipartFile file, HttpSession session) throws IOException{
+    public String uploadDocument(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @RequestParam("file") MultipartFile file, 
+    		@RequestParam(value="fileDescription") String description, HttpSession session) throws IOException{
          
     	int userId = (int)session.getAttribute("userid");
     	User user = userService.findById(userId);
@@ -186,18 +187,18 @@ public class WebController {
              
             model.addAttribute("user", user);
             fileBucket.setFile(file);
-            saveDocument(fileBucket, user);
+            saveDocument(fileBucket, user, description);
  
             return "redirect:/add-document";
         }
     }
     
     
-    private void saveDocument(FileBucket fileBucket, User user) throws IOException{    
+    private void saveDocument(FileBucket fileBucket, User user, String fileDescription) throws IOException{    
         MultipartFile multipartFile = fileBucket.getFile();
         Document document = new Document(user.getID(),
         							multipartFile.getOriginalFilename(),
-        							fileBucket.getDescription(),
+        							fileDescription,
         							multipartFile.getContentType(),
         							multipartFile.getBytes()
         							);
