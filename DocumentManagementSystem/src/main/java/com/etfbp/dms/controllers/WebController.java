@@ -185,6 +185,13 @@ public class WebController {
             response.getOutputStream().write(documentInBytes);
     		
     	}
+    	else if (document.getType().equals("text/plain")) {
+    		byte[] documentInBytes = documentService.findById(Integer.parseInt(docId)).getContent(); 
+            response.setDateHeader("Expires", -1);
+            response.setContentType("text/plain");
+            response.setContentLength(documentInBytes.length);
+            response.getOutputStream().write(documentInBytes);
+    	}
     	
         return null;
     }
@@ -212,7 +219,7 @@ public class WebController {
  
         List<Document> documents = documentService.findAllByUserId(userId);
         model.addAttribute("documents", documents);
-        System.out.print(documents.get(0).getId());
+        
         return "myDocuments";
     }
     

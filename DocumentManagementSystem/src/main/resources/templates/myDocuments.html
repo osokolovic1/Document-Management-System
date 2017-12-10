@@ -59,8 +59,8 @@
                 <th>Preuzimanje</th>
                 <th>Brisanje</th>
               </tr>
-
-              <div th:if="${not #lists.isEmpty(documents)}">
+<!--not #lists.isEmpty(documents)-->
+              <div th:if="${documents != null}">
         				<tr th:each="document : ${documents}" th:if="${document.id != null}">
                    <tr>
                      <td>
