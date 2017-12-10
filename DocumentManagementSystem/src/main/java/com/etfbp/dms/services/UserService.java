@@ -25,5 +25,8 @@ public class UserService {
 		// TODO Auto-generated method stub
 		return userRepository.findOne(userId);
 	}
+	public User findByUserName(String userName) {
+		return userRepository.findUserByUserName(userName);
+	}
 
 }

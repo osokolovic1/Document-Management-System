@@ -116,12 +116,25 @@ public class WebController {
         if(session.getAttribute("userid") != null)
         	return "redirect:/";
         model.addAttribute("user", user);
-        String info = String.format("Customer Submission: id = %d, firstname = %s, lastname = %s", 
-        								user.getID(), user.getName(), user.getLastName());
-        log.info(info);
         
-        userService.registerUser(user);
-                
+        User existsEmail = userService.findUserByEmail(user.getEmail());
+        User existsUserName = userService.findByUserName(user.getUserName());
+        String message = "";
+        
+        if (existsEmail == null && existsUserName == null) {
+        	message = "";
+            userService.registerUser(user);          
+        }
+        else {
+        	if (existsEmail != null)
+        		message += "Korisnik sa unesenom email adresom već postoji!\n";
+        	if (existsUserName != null) 
+        		message += "Korisnik sa unesenim korisničkim imenom već postoji!\n";
+        	
+        }
+        
+        model.addAttribute("message", message);
+        
         return "login";
     }
     
@@ -154,6 +167,8 @@ public class WebController {
   
         return "redirect:/my-documents";
     }
+    
+    
     @RequestMapping(value= "/viewDocument-{docId}", method=RequestMethod.GET)
     public String viewDocument (@PathVariable String docId,Model model, HttpServletResponse response, HttpSession session) throws IOException{
         if(session.getAttribute("userid") == null)
