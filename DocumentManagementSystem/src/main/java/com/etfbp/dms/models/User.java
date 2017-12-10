@@ -1,12 +1,13 @@
 package com.etfbp.dms.models;
 
-import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -34,8 +35,9 @@ public class User {
 	@Column(name = "email")
 	private String email;
 	
-	@Column(name = "role_ID")
-	private Integer roleID;
+	@ManyToOne
+	@JoinColumn(name="role_id")
+	private Role role;
 
 
 	public Integer getID() {
@@ -86,26 +88,26 @@ public class User {
 		this.email = email;
 	}
 
-	public Integer getRoleID() {
-		return roleID;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoleID(Integer roleID) {
-		this.roleID = roleID;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public User() {
 		
 	}
 	
-	public User(String userName, String password, String name, String lastName, String email, Integer role) {
+	public User(String userName, String password, String name, String lastName, String email, Role role) {
 		super();
 		this.userName = userName;
 		this.password = password;
 		this.name = name;
 		this.lastName = lastName;
 		this.email = email;
-		this.roleID = role;
+		this.role = role;
 	}
 	
 	

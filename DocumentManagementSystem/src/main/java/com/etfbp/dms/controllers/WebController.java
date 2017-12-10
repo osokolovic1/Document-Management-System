@@ -51,11 +51,22 @@ public class WebController {
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	
     @RequestMapping(value= {"/login", "/"}, method=RequestMethod.GET)
-    public String login(Model model) {
+    public String login(Model model, HttpSession session) {
+    	if(session.getAttribute("userid") != null) {
+    		return "redirect:/my-documents";
+    	}
+    	
         model.addAttribute("user", new User());
         return "login";
     }
     
+    @RequestMapping(value = "/logout", method=RequestMethod.GET)
+    public String logout(Model model, HttpSession session) {
+    	if(session.getAttribute("userid") != null) {
+    		session.invalidate();
+    	}
+    	return "redirect:/";
+    }
     @RequestMapping(value = {"/login", "/"}, method = RequestMethod.POST)
     public String login(Model model, @RequestParam(value="emailLogin") String email, 
     		@RequestParam(value="passwordLogin") String password, HttpSession session) {
@@ -74,8 +85,7 @@ public class WebController {
     			session.setAttribute("name", user.getName());
     			session.setAttribute("lastname", user.getLastName());
     			session.setAttribute("email", user.getEmail());
-    			session.setAttribute("roleid", user.getRoleID());
-    			
+    			session.setAttribute("roleid", user.getRole().getRole());
     			view = "home";
     		}
     		else {
@@ -92,14 +102,19 @@ public class WebController {
     }
     
     @RequestMapping(value= "/registration", method=RequestMethod.GET)
-    public String registration(Model model) {
+    public String registration(Model model, HttpSession session) {
+    	if(session.getAttribute("userid") != null) {
+    		return "redirect:/my-documents";
+    	}
+    	
         model.addAttribute("user", new User());
         return "registration";
     }
  
     @RequestMapping(value="/registration", method=RequestMethod.POST)
-    public String registrationSubmit(@ModelAttribute User user, Model model) {
-    	
+    public String registrationSubmit(@ModelAttribute User user, Model model, HttpSession session) {
+        if(session.getAttribute("userid") != null)
+        	return "redirect:/";
         model.addAttribute("user", user);
         String info = String.format("Customer Submission: id = %d, firstname = %s, lastname = %s", 
         								user.getID(), user.getName(), user.getLastName());
@@ -112,7 +127,10 @@ public class WebController {
     
     @RequestMapping(value = { "/download-document-{docId}" }, method = RequestMethod.GET)
     public String downloadDocument(@PathVariable String docId, HttpServletResponse response, HttpSession session) throws IOException {
-        Document document = documentService.findById(Integer.parseInt(docId));
+        if(session.getAttribute("userid") == null)
+        	return "redirect:/";
+        
+    	Document document = documentService.findById(Integer.parseInt(docId));
         response.setContentType(document.getType());
         response.setContentLength(document.getContent().length);
         response.setHeader("Content-Disposition","attachment; filename=\"" + document.getName() +"\"");
@@ -124,6 +142,9 @@ public class WebController {
     
     @RequestMapping(value = { "/download-my-document-{docId}" }, method = RequestMethod.GET)
     public String downloadMyDocument(@PathVariable String docId, HttpServletResponse response, HttpSession session) throws IOException {
+        if(session.getAttribute("userid") == null)
+        	return "redirect:/";
+        
         Document document = documentService.findById(Integer.parseInt(docId));
         response.setContentType(document.getType());
         response.setContentLength(document.getContent().length);
@@ -135,6 +156,9 @@ public class WebController {
     }
     @RequestMapping(value= "/viewDocument-{docId}", method=RequestMethod.GET)
     public String viewDocument (@PathVariable String docId,Model model, HttpServletResponse response, HttpSession session) throws IOException{
+        if(session.getAttribute("userid") == null)
+        	return "redirect:/";
+        
     	Document document = documentService.findById(Integer.parseInt(docId));
     	if (document.getType().equals("application/pdf"))
     	{
@@ -150,13 +174,19 @@ public class WebController {
         return null;
     }
     @RequestMapping(value = { "/delete-my-document-{docId}" }, method = RequestMethod.GET)
-    public String deleteDocument(@PathVariable String docId) {
+    public String deleteDocument(@PathVariable String docId, HttpSession session) {
+        if(session.getAttribute("userid") == null)
+        	return "redirect:/";
+        
         documentService.deleteById(Integer.parseInt(docId));
         return "redirect:/my-documents";
     }
     
     @RequestMapping(value = { "/my-documents" }, method = RequestMethod.GET)
     public String myDocuments(ModelMap model, HttpSession session) {
+    	if(session.getAttribute("userid") == null) {
+    		return "login";
+    	}
     	
     	int userId = (int)session.getAttribute("userid");
     	User user = userService.findById(userId);
@@ -173,6 +203,9 @@ public class WebController {
     
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.GET)
     public String addDocuments(ModelMap model, HttpSession session) {
+    	if(session.getAttribute("userid") == null) {
+    		return "login";
+    	}
     	
     	int userId = (int)session.getAttribute("userid");
     	User user = userService.findById(userId);
@@ -190,7 +223,9 @@ public class WebController {
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.POST)
     public String uploadDocument(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @RequestParam("file") MultipartFile file, 
     		@RequestParam(value="fileDescription") String description, HttpSession session) throws IOException{
-         
+    	if(session.getAttribute("userid") == null) {
+    		return "login";
+    	}
     	int userId = (int)session.getAttribute("userid");
     	User user = userService.findById(userId);
     	model.addAttribute(user);
