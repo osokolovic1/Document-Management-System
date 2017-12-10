@@ -64,7 +64,7 @@
         				<tr th:each="document : ${documents}" th:if="${document.id != null}">
                    <tr>
                      <td>
-                       <a href="#" th:text="${document.name}" data-toggle="popover"
+                       <a th:href="@{'/viewDocument-' + ${document.id}}" th:text="${document.name}" data-toggle="popover"
                         data-trigger="hover" th:attr="data-content=*{document.description}"></a>
                      </td>
                      <td>

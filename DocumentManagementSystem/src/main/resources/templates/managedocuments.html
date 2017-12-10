@@ -33,7 +33,7 @@
               <div th:with="docId=${document.id}">
                 <tr>
                   <td>
-                    <a href="#" th:text="${document.name}" data-toggle="popover"
+                    <a th:href="@{'/viewDocument-' + ${document.id}}" th:text="${document.name}" data-toggle="popover"
                      data-trigger="hover" th:attr="data-content=*{document.description}"></a>
                   </td>
                   <td>

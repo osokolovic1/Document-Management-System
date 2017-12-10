@@ -1,13 +1,19 @@
 package com.etfbp.dms.controllers;
  
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.coyote.http11.Http11AprProtocol;
+import org.dom4j.io.DocumentSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.etfbp.dms.models.Document;
 import com.etfbp.dms.models.FileBucket;
@@ -125,6 +132,22 @@ public class WebController {
         FileCopyUtils.copy(document.getContent(), response.getOutputStream());
   
         return "redirect:/my-documents";
+    }
+    @RequestMapping(value= "/viewDocument-{docId}", method=RequestMethod.GET)
+    public String viewDocument (@PathVariable String docId,Model model, HttpServletResponse response, HttpSession session) throws IOException{
+    	Document document = documentService.findById(Integer.parseInt(docId));
+    	if (document.getType().equals("application/pdf"))
+    	{
+    		byte[] documentInBytes = documentService.findById(Integer.parseInt(docId)).getContent();         
+            response.setHeader("Content-Disposition", "inline; filename=\"report.pdf\"");
+            response.setDateHeader("Expires", -1);
+            response.setContentType("application/pdf");
+            response.setContentLength(documentInBytes.length);
+            response.getOutputStream().write(documentInBytes);
+    		
+    	}
+    	
+        return null;
     }
     @RequestMapping(value = { "/delete-my-document-{docId}" }, method = RequestMethod.GET)
     public String deleteDocument(@PathVariable String docId) {
