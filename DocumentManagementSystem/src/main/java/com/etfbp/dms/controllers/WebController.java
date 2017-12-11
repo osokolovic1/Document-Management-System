@@ -175,24 +175,20 @@ public class WebController {
         	return "redirect:/";
         
     	Document document = documentService.findById(Integer.parseInt(docId));
-    	if (document.getType().equals("application/pdf"))
-    	{
-    		byte[] documentInBytes = documentService.findById(Integer.parseInt(docId)).getContent();         
-            response.setHeader("Content-Disposition", "inline; filename=\"report.pdf\"");
-            response.setDateHeader("Expires", -1);
-            response.setContentType("application/pdf");
-            response.setContentLength(documentInBytes.length);
-            response.getOutputStream().write(documentInBytes);
-    		
-    	}
-    	else if (document.getType().equals("text/plain")) {
-    		byte[] documentInBytes = documentService.findById(Integer.parseInt(docId)).getContent(); 
-            response.setDateHeader("Expires", -1);
-            response.setContentType("text/plain");
-            response.setContentLength(documentInBytes.length);
-            response.getOutputStream().write(documentInBytes);
+    	if(document == null)
+    		return "error";
+    	
+    	byte[] documentInBytes = documentService.findById(Integer.parseInt(docId)).getContent(); 
+    	response.setDateHeader("Expires", -1);
+    	response.setContentType(document.getType());
+
+        
+    	if (document.getType().equals("application/pdf")) {        
+            response.setHeader("Content-Disposition", "inline; filename=\"report.pdf\"");        	
     	}
     	
+    	response.setContentLength(documentInBytes.length);
+        response.getOutputStream().write(documentInBytes);
         return null;
     }
     @RequestMapping(value = { "/delete-my-document-{docId}" }, method = RequestMethod.GET)
@@ -207,7 +203,7 @@ public class WebController {
     @RequestMapping(value = { "/my-documents" }, method = RequestMethod.GET)
     public String myDocuments(ModelMap model, HttpSession session) {
     	if(session.getAttribute("userid") == null) {
-    		return "login";
+    		return "redirect:/login";
     	}
     	
     	int userId = (int)session.getAttribute("userid");
@@ -226,7 +222,7 @@ public class WebController {
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.GET)
     public String addDocuments(ModelMap model, HttpSession session) {
     	if(session.getAttribute("userid") == null) {
-    		return "login";
+    		return "redirect:/login";
     	}
     	
     	int userId = (int)session.getAttribute("userid");
@@ -246,8 +242,9 @@ public class WebController {
     public String uploadDocument(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @RequestParam("file") MultipartFile file, 
     		@RequestParam(value="fileDescription") String description, HttpSession session) throws IOException{
     	if(session.getAttribute("userid") == null) {
-    		return "login";
+    		return "redirect:/login";
     	}
+    	
     	int userId = (int)session.getAttribute("userid");
     	User user = userService.findById(userId);
     	model.addAttribute(user);
