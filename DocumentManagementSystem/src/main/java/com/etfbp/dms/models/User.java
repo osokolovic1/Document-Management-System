@@ -1,12 +1,20 @@
 package com.etfbp.dms.models;
 
 
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -39,6 +47,15 @@ public class User {
 	@JoinColumn(name="role_id")
 	private Role role;
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "users_groups", joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id"),
+							inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
+	private Set<Grupa> grupa; 
+
+	@ManyToMany(targetEntity = Document.class, cascade = CascadeType.ALL)
+	@JoinTable(name = "permission_users", joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id"),
+							inverseJoinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"))
+	private Set<Document> documents;
 
 	public Integer getID() {
 		return id;
@@ -96,9 +113,29 @@ public class User {
 		this.role = role;
 	}
 
+	
+	public Set<Grupa> getGrupa() {
+		return grupa;
+	}
+
+	
+	public void setGrupa(Set<Grupa> grupa) {
+		this.grupa = grupa;
+	}
+
+	
+	public Set<Document> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(Set<Document> documents) {
+		this.documents = documents;
+	}
+
 	public User() {
 		
 	}
+	
 	
 	public User(String userName, String password, String name, String lastName, String email, Role role) {
 		super();

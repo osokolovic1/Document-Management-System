@@ -1,15 +1,20 @@
 package com.etfbp.dms.models;
 
-import java.security.Timestamp;
+
+import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -40,6 +45,10 @@ public class Document {
     @Column(name="content", nullable=false)
     private byte[] content;
      
+	@ManyToMany(targetEntity = User.class, cascade = CascadeType.ALL)
+	@JoinTable(name = "permission_users", joinColumns = @JoinColumn(name="document_id", referencedColumnName = "id"),
+							inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+	private Set<User> users;
      
     public Integer getId() {
         return id;
@@ -88,8 +97,18 @@ public class Document {
         this.content = content;
     }
     
+    
  
-    public Document() {}
+    public Set<User> getUsers() {
+		return users;
+	}
+
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	public Document() {}
     public Document(Integer userId, String name, String description, String type, byte[] content) {
 		super();
 		this.userId = userId;

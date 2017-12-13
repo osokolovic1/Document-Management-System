@@ -2,7 +2,9 @@ package com.etfbp.dms.controllers;
  
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -33,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.etfbp.dms.models.Document;
 import com.etfbp.dms.models.FileBucket;
 import com.etfbp.dms.models.User;
+import com.etfbp.dms.models.Grupa;
 import com.etfbp.dms.repo.UserRepository;
 import com.etfbp.dms.services.DocumentService;
 import com.etfbp.dms.services.UserService;
@@ -86,6 +89,12 @@ public class WebController {
     			session.setAttribute("lastname", user.getLastName());
     			session.setAttribute("email", user.getEmail());
     			session.setAttribute("roleid", user.getRole().getRole());
+    			
+    			Set<Grupa> grupe = user.getGrupa();
+    			for(Iterator<Grupa> it = grupe.iterator(); it.hasNext();) {
+    				Grupa g = it.next();
+    				System.out.println("GRUPA: " + g.getGroupName());
+    			}
     			view = "home";
     		}
     		else {
