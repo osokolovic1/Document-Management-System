@@ -5,20 +5,16 @@
     <th:block th:include="home :: head"></th:block>
   </head>
 
-
   <body style="overflow-x: hidden;">
-    <div class="container-fluid" style="margin: 0px !important; padding: 0px !important;">
+    <th:block th:include="home :: top-navbar"></th:block>
+    <div class="container-fluid" style="padding: 0; !important">
+      <div class="row row-offcanvas row-offcanvas-left">
 
-      <div class="row">
-        <!--menu-->
-        <div class="col-sm-2">
-          <th:block th:include="home :: menu"></th:block>
-        </div>
+        <th:block th:include="home :: side-navbar"></th:block>
 
-        <!--subpage-->
         <div class="col-sm-10">
-          <div class="container">
-
+          <br />
+          <!--Ovdje se ubacuju podstranice-->
           <div class="page-header">
             <h2>Svi dokumenti:</h2>
           </div>
@@ -33,8 +29,9 @@
               <div th:with="docId=${document.id}">
                 <tr>
                   <td>
-                    <a th:href="@{'/viewDocument-' + ${document.id}}" th:text="${document.name}" data-toggle="popover"
-                     data-trigger="hover" th:attr="data-content=*{document.description}"></a>
+                    <a target="_blank" th:href="@{'/viewDocument-' + ${document.id}}"
+                      th:text="${document.name}" data-toggle="popover" data-trigger="hover" 
+                      th:attr="data-content=*{document.description}"></a>
                   </td>
                   <td>
                     <a class="btn btn-sm btn-success" th:href="@{'/download-document-' + ${document.id}}">
@@ -46,11 +43,11 @@
             </tr>
           </table>
 
-          </div>
         </div>
-      </div>
 
-      <th:block th:include="home :: scripts"></th:block>
+      </div>
     </div>
+
+    <th:block th:include="home :: scripts"></th:block>
  </body>
 </html>

@@ -9,10 +9,41 @@
   background-color: #1b4996;
   position: fixed;
   top: 0px;
-  width: 230px;
+  width: 200px;
   height: 100%;
   color: #ffffff;
 }
+
+#top-navbar {
+  font-family: verdana;
+  font-size: 14px;
+  font-weight: 200;
+  background-color: #1b4996;
+  border-bottom: 1px solid #3265ba;
+}
+
+#top-navbar .navbar-brand {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+#top-navbar a {
+  color: #ffffff;
+}
+
+#top-navbar li ul.dropdown-menu {
+  background-color: #3265ba;
+}
+
+#top-navbar li a:hover,
+#top-navbar li a:focus {
+  background-color: #1c1c23;
+}
+
+#top-navbar li a:hover {
+  -webkit-transition: all 0.5s ease;
+}
+
 .nav-side-menu .brand {
   background-color: #1b4996;
   line-height: 50px;
@@ -68,10 +99,9 @@
 }
 .nav-side-menu ul .sub-menu li,
 .nav-side-menu li .sub-menu li {
-  background-color: #1b4996;
+  background-color: #3265ba;
   border: none;
   line-height: 28px;
-  border-bottom: 1px solid #3265ba;
   margin-left: 0px;
 }
 .nav-side-menu ul .sub-menu li:hover,
@@ -89,7 +119,8 @@
 }
 .nav-side-menu li {
   padding-left: 0px;
-  border-bottom: 1px solid #3265ba;
+  /*border-bottom: 1px solid #3265ba;*/
+  border-top: none;
 }
 .nav-side-menu li a {
   text-decoration: none;

@@ -292,4 +292,13 @@ public class WebController {
         System.out.println(document.getId());
     }
     
+    
+    /*ne brisati, sluzi za rad na formama*/
+    @RequestMapping(value= {"/template"}, method=RequestMethod.GET)
+    public String test(Model model) {
+    	
+        model.addAttribute("user", new User());
+        return "template";
+    }
+    
 }
