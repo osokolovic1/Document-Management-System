@@ -1,8 +1,11 @@
 package com.etfbp.dms.services;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.etfbp.dms.models.Document;
 import com.etfbp.dms.models.User;
 import com.etfbp.dms.repo.UserRepository;
 
@@ -18,6 +21,10 @@ public class UserService {
 		return true;
 	}
 	
+	public Set<User> findAll() {
+		return userRepository.findAll();
+	}
+	
 	public User findUserByEmail(String email) {
 		return userRepository.findUserByEmail(email);
 	}
@@ -27,6 +34,10 @@ public class UserService {
 	}
 	public User findByUserName(String userName) {
 		return userRepository.findUserByUserName(userName);
+	}
+
+	public Set<Document> findAllUserDocumentsById(Integer id) {
+		return userRepository.findAllUserDocumentsById(id);
 	}
 
 }

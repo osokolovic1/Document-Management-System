@@ -38,6 +38,7 @@ import com.etfbp.dms.models.User;
 import com.etfbp.dms.models.Grupa;
 import com.etfbp.dms.repo.UserRepository;
 import com.etfbp.dms.services.DocumentService;
+import com.etfbp.dms.services.GroupService;
 import com.etfbp.dms.services.UserService;
  
  
@@ -50,6 +51,9 @@ public class WebController {
 	
 	@Autowired
 	DocumentService documentService;
+	
+	@Autowired
+	GroupService groupService;
 	
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	
@@ -223,6 +227,22 @@ public class WebController {
         model.addAttribute("fileBucket", fileModel);
  
         List<Document> documents = documentService.findAllByUserId(userId);
+        
+        Set<User> allUsers = userService.findAll();
+        Set<Grupa> allGroups = groupService.findAll();
+        
+        //Izbacivanje korisnika koji trazi listu korisnika
+        Iterator<User> iterator = allUsers.iterator();
+        while (iterator.hasNext()) {
+            User element = iterator.next();
+            if (element.getID().equals(session.getAttribute("userid"))) {
+                iterator.remove();
+                break;
+            }
+        }
+
+        model.addAttribute("groups",allGroups);
+        model.addAttribute("users", allUsers);
         model.addAttribute("documents", documents);
         
         return "myDocuments";
@@ -241,15 +261,32 @@ public class WebController {
         FileBucket fileModel = new FileBucket();
         model.addAttribute("fileBucket", fileModel);
  
-        List<Document> documents = documentService.findAll();
-        model.addAttribute("documents", documents);
-        System.out.print(documents.get(0).getId());
+        //List<Document> documents = documentService.findAll();
+        Set<Document> docs = userService.findAllUserDocumentsById(user.getID());
+        Set<User> allUsers = userService.findAll();
+        Set<Grupa> allGroups = groupService.findAll();
+        
+        //Izbacivanje korisnika koji trazi listu korisnika
+        Iterator<User> iterator = allUsers.iterator();
+        while (iterator.hasNext()) {
+            User element = iterator.next();
+            if (element.getID().equals(session.getAttribute("userid"))) {
+                iterator.remove();
+                break;
+            }
+        }
+
+        model.addAttribute("groups",allGroups);
+        model.addAttribute("users", allUsers);
+        model.addAttribute("documents", docs);
+       //??? System.out.print(docs.get(0).getId());
         return "managedocuments";
     }
     
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.POST)
     public String uploadDocument(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @RequestParam("file") MultipartFile file, 
-    		@RequestParam(value="fileDescription") String description, HttpSession session) throws IOException{
+    		@RequestParam(value="fileDescription") String description,@RequestParam(required=false, value="otherUsers") Set<User> sharedWithUsers, 
+    		@RequestParam(required=false, value="sharedGroups") Set<Grupa> sharedWithGroups, HttpSession session) throws IOException{
     	if(session.getAttribute("userid") == null) {
     		return "redirect:/login";
     	}
@@ -263,8 +300,9 @@ public class WebController {
             
             model.addAttribute("user", user);
  
-            List<Document> documents = documentService.findAll();
-            model.addAttribute("documents", documents);
+           // List<Document> documents = documentService.findAll();
+            Set<Document> docs = userService.findAllUserDocumentsById(user.getID().intValue());
+            model.addAttribute("documents", docs);
              
             return "managedocuments";
         } else {
@@ -273,21 +311,23 @@ public class WebController {
              
             model.addAttribute("user", user);
             fileBucket.setFile(file);
-            saveDocument(fileBucket, user, description);
+            saveDocument(fileBucket, user, description, sharedWithUsers, sharedWithGroups);
  
             return "redirect:/add-document";
         }
     }
     
     
-    private void saveDocument(FileBucket fileBucket, User user, String fileDescription) throws IOException{    
+    private void saveDocument(FileBucket fileBucket, User user, String fileDescription, Set<User> sharedWithUsers,
+    		Set<Grupa> sharedWithGroups) throws IOException{    
         MultipartFile multipartFile = fileBucket.getFile();
         Document document = new Document(user.getID(),
         							multipartFile.getOriginalFilename(),
         							fileDescription,
         							multipartFile.getContentType(),
-        							multipartFile.getBytes()
-        							);
+        							multipartFile.getBytes(), 
+        							sharedWithUsers, 
+        							sharedWithGroups);
         documentService.saveDocument(document);
         System.out.println(document.getId());
     }

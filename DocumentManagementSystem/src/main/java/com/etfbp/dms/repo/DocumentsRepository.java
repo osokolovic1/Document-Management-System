@@ -9,7 +9,8 @@ import com.etfbp.dms.models.Document;
 
 
 public interface DocumentsRepository extends CrudRepository<Document, Integer> {
-	List<Document> findAll();
+	
+	//List<Document> findAll();
     
     Document findById(int id);
      

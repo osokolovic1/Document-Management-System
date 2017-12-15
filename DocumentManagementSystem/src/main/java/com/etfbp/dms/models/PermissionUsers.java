@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -20,7 +20,7 @@ public class PermissionUsers implements Serializable{
 	@Column(name = "user_id")
 	private Set<User> users;
 	
-	@ManyToMany(targetEntity=Document.class ,mappedBy = "users")
+	@ManyToMany(targetEntity=Document.class ,mappedBy = "users", fetch = FetchType.LAZY)
 	@Column(name = "document_id")
 	private Set<Document> documents;
 	
@@ -63,6 +63,5 @@ public class PermissionUsers implements Serializable{
 	public void setCanWrite(Boolean canWrite) {
 		CanWrite = canWrite;
 	}
-	
 	
 }

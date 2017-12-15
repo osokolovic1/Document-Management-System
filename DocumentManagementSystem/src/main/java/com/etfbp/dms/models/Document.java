@@ -17,6 +17,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 
 @Entity
@@ -41,15 +42,21 @@ public class Document {
     @Column(name="type", length=100, nullable=false)
     private String type;
      
-    @Lob @Basic(fetch = FetchType.LAZY)
+    @Lob 
+    @Basic(fetch = FetchType.LAZY)
     @Column(name="content", nullable=false)
     private byte[] content;
      
-	@ManyToMany(targetEntity = User.class, cascade = CascadeType.ALL)
+	@ManyToMany(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "permission_users", joinColumns = @JoinColumn(name="document_id", referencedColumnName = "id"),
 							inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
 	private Set<User> users;
      
+	@ManyToMany(targetEntity = Grupa.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "permission_groups", joinColumns = @JoinColumn(name="document_id", referencedColumnName = "id"),
+							inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
+	private Set<Grupa> grupe;
+	
     public Integer getId() {
         return id;
     }
@@ -108,14 +115,26 @@ public class Document {
 		this.users = users;
 	}
 
+	
+	public Set<Grupa> getGrupe() {
+		return grupe;
+	}
+
+	public void setGrupe(Set<Grupa> grupe) {
+		this.grupe = grupe;
+	}
+
 	public Document() {}
-    public Document(Integer userId, String name, String description, String type, byte[] content) {
+    public Document(Integer userId, String name, String description, String type, byte[] content, Set<User> sharedWithUsers,
+    		Set<Grupa> sharedWithGroups) {
 		super();
 		this.userId = userId;
 		this.name = name;
 		this.description = description;
 		this.type = type;
 		this.content = content;
+		this.users = sharedWithUsers;
+		this.grupe = sharedWithGroups;
 	}
     
     @Override

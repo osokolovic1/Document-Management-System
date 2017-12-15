@@ -19,9 +19,9 @@ public class DocumentService{
         return documentRepository.findById(id);
     }
  
-    public List<Document> findAll() {
+   /* public List<Document> findAll() {
         return documentRepository.findAll();
-    }
+    }*/
  
     public List<Document> findAllByUserId(int userId) {
         return documentRepository.findAllByUserId(userId);

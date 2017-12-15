@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,10 +28,15 @@ public class Grupa {
 	@Column(name = "group_name")
 	private String groupName;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "users_groups", joinColumns = @JoinColumn(name="group_id", referencedColumnName = "id"),
 							inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
 	private Set<User> users;
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "permission_groups", joinColumns = @JoinColumn(name="group_id", referencedColumnName = "id"),
+							inverseJoinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"))
+	private Set<Document> documents;
 	
 	public Integer getId() {
 		return id;
@@ -56,6 +62,16 @@ public class Grupa {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
+
+	public Set<Document> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(Set<Document> documents) {
+		this.documents = documents;
+	}
+	
+	
 	
 	
 	
