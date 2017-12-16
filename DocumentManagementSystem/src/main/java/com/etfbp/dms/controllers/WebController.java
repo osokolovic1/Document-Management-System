@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -44,6 +45,7 @@ import com.etfbp.dms.services.UserService;
  
  
 @Controller
+@Transactional
 public class WebController {
  
 	@Autowired
@@ -284,9 +286,10 @@ public class WebController {
     }
     
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.POST)
-    public String uploadDocument(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @RequestParam("file") MultipartFile file, 
+    public String addDocuments(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @RequestParam("file") MultipartFile file, 
     		@RequestParam(value="fileDescription") String description,@RequestParam(required=false, value="otherUsers") Set<User> sharedWithUsers, 
     		@RequestParam(required=false, value="sharedGroups") Set<Grupa> sharedWithGroups, HttpSession session) throws IOException{
+    	
     	if(session.getAttribute("userid") == null) {
     		return "redirect:/login";
     	}
@@ -297,8 +300,6 @@ public class WebController {
     	
         if (result.hasErrors()) {
             System.out.println("validation errors");
-            
-            model.addAttribute("user", user);
  
            // List<Document> documents = documentService.findAll();
             Set<Document> docs = userService.findAllUserDocumentsById(user.getID().intValue());
@@ -308,6 +309,11 @@ public class WebController {
         } else {
              
             System.out.println("Fetching file");
+            
+            model.addAttribute("user", user);
+            
+            log.info("TEST:\n");
+            if (sharedWithGroups == null) log.info("HOUSTON, IMAMO PROBLEM!");
              
             model.addAttribute("user", user);
             fileBucket.setFile(file);
