@@ -23,4 +23,8 @@ public class GroupService {
 	public Set<Grupa> findAllByGroupName(String groupName) {
 		return grupaRepository.findAllByGroupName(groupName);
 	}
+	
+	public Grupa findByGroupName(String groupName) {
+		return grupaRepository.findByGroupName(groupName);
+	}
 }

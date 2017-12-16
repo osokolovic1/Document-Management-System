@@ -38,30 +38,31 @@
             </div>
 
 
-		<div class = "form-group">
-				<label class="control-label col-sm-2">Korisnici:</label>
-			    <div class="col-sm-8">
-  			    <select id="otherUsers" th:field="*{users}" size="10" multiple="multiple" for="otherUsers">
-      				<option th:each="user : ${users}"
-      						th:value="${{user.userName}}"
-      						th:text="${user.userName}" >
-      				</option>
-      			</select>
-          </div>
+          <div id="selects" class="form-group">
 
-		</div>
-				<div class = "form-group">
-				<label class="control-label col-sm-2">Grupe:</label>
-			    <div class="col-sm-8">
-  			    <select id="sharedGroups" th:field="*{groups}" size="10" multiple="multiple" for="sharedGroups">
+            <label class="control-label col-sm-2">Korisnici:</label>
+            <div class="col-sm-3">
+              <select id="otherUsers" class="form-control" size="10" style="width: 250px;" multiple="multiple" name="otherUsers">
+            		<option th:each="user : ${users}"
+            				th:value="${{user.userName}}"
+            				th:text="${user.userName}" >
+            		</option>
+            	</select>
+           </div>
+
+           <label class="control-label col-sm-2">Grupe:</label>
+           <div class="col-sm-3">
+             <select id="sharedGroups" class="form-control" size="10" style="width: 250px;" multiple="multiple" name="sharedGroups">
       				<option th:each="group : ${groups}"
       						th:value="${{group.groupName}}"
-      						th:text="${group.groupName}"
-      						>
+      						th:text="${group.groupName}">
       				</option>
-  			     </select>
-          </div>
-		</div>
+      			 </select>
+            </div>
+
+  		    </div>
+
+
             <div class="form-group">
                <div class="col-sm-offset-2 col-sm-10">
                    <button type="submit" class="btn btn-primary btn-lg">Dodaj</button>

@@ -1,11 +1,15 @@
 package com.etfbp.dms.controllers;
  
+import static org.assertj.core.api.Assertions.in;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -287,8 +291,7 @@ public class WebController {
     
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.POST)
     public String addDocuments(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @RequestParam("file") MultipartFile file, 
-    		@RequestParam(value="fileDescription") String description,@RequestParam(required=false, value="otherUsers") Set<User> sharedWithUsers, 
-    		@RequestParam(required=false, value="sharedGroups") Set<Grupa> sharedWithGroups, HttpSession session) throws IOException{
+    		@RequestParam(value="fileDescription") String description, HttpSession session, HttpServletRequest request) throws IOException{
     	
     	if(session.getAttribute("userid") == null) {
     		return "redirect:/login";
@@ -312,11 +315,22 @@ public class WebController {
             
             model.addAttribute("user", user);
             
-            log.info("TEST:\n");
-            if (sharedWithGroups == null) log.info("HOUSTON, IMAMO PROBLEM!");
+            //otherUsers
+            //sharedGroups
+            String[] users = request.getParameterValues("otherUsers");
+            String[] groups = request.getParameterValues("sharedGroups");
+
+            Set<User> sharedWithUsers = new HashSet<User>();
+            Set<Grupa> sharedWithGroups = new HashSet<Grupa>();
+            /*Ovo ce trebati optimizirati*/
+            for (String u : users)
+            	sharedWithUsers.add(userService.findByUserName(u));
+            for (String g : groups)
+            	sharedWithGroups.add(groupService.findByGroupName(g));
              
             model.addAttribute("user", user);
             fileBucket.setFile(file);
+
             saveDocument(fileBucket, user, description, sharedWithUsers, sharedWithGroups);
  
             return "redirect:/add-document";
