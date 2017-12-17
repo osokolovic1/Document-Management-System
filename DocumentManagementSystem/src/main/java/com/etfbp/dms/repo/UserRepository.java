@@ -17,4 +17,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	
 	@Query("SELECT d FROM Document d WHERE d.userId=?#{[0]}")
 	Set<Document> findAllUserDocumentsById(Integer id);
+	
+
 }

@@ -5,8 +5,11 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Table(name = "permission_groups")
 @Embeddable
@@ -14,10 +17,12 @@ public class PermissionGroups implements Serializable {
 	
 	@ManyToMany(targetEntity = Grupa.class, mappedBy = "documents")
 	@Column(name = "group_id")
+	@EmbeddedId
 	private Set<Grupa> groups;
 	
 	@ManyToMany(targetEntity=Document.class ,mappedBy = "grupa")
 	@Column(name = "document_id")
+	@EmbeddedId
 	private Set<Document> documents;
 	
 	@Column(name = "can_read")

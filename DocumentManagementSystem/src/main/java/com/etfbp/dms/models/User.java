@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "users")
@@ -47,15 +48,16 @@ public class User {
 	@JoinColumn(name="role_id")
 	private Role role;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(targetEntity = Grupa.class)
 	@JoinTable(name = "users_groups", joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id"),
 							inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
 	private Set<Grupa> grupa; 
 
-	@ManyToMany(targetEntity = Document.class, cascade = CascadeType.ALL)
+	@ManyToMany(targetEntity = Document.class)
 	@JoinTable(name = "permission_users", joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id"),
 							inverseJoinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"))
 	private Set<Document> documents;
+	
 
 	public Integer getID() {
 		return id;
@@ -123,7 +125,7 @@ public class User {
 		this.grupa = grupa;
 	}
 
-	
+	@Transactional
 	public Set<Document> getDocuments() {
 		return documents;
 	}

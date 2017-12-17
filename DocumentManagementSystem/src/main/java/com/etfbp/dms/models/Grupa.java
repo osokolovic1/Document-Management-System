@@ -33,11 +33,6 @@ public class Grupa {
 							inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
 	private Set<User> users;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "permission_groups", joinColumns = @JoinColumn(name="group_id", referencedColumnName = "id"),
-							inverseJoinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"))
-	private Set<Document> documents;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -63,16 +58,5 @@ public class Grupa {
 		this.users = users;
 	}
 
-	public Set<Document> getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(Set<Document> documents) {
-		this.documents = documents;
-	}
-	
-	
-	
-	
 	
 }

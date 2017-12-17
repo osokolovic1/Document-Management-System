@@ -47,12 +47,12 @@ public class Document {
     @Column(name="content", nullable=false)
     private byte[] content;
      
-	@ManyToMany(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(targetEntity = User.class, fetch = FetchType.LAZY)
 	@JoinTable(name = "permission_users", joinColumns = @JoinColumn(name="document_id", referencedColumnName = "id"),
 							inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
 	private Set<User> users;
      
-	@ManyToMany(targetEntity = Grupa.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(targetEntity = Grupa.class, fetch = FetchType.LAZY)
 	@JoinTable(name = "permission_groups", joinColumns = @JoinColumn(name="document_id", referencedColumnName = "id"),
 							inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
 	private Set<Grupa> grupe;

@@ -18,11 +18,7 @@ public class DocumentService{
     public Document findById(int id) {
         return documentRepository.findById(id);
     }
- 
-   /* public List<Document> findAll() {
-        return documentRepository.findAll();
-    }*/
- 
+  
     public List<Document> findAllByUserId(int userId) {
         return documentRepository.findAllByUserId(userId);
     }
@@ -35,4 +31,11 @@ public class DocumentService{
     	documentRepository.deleteById(id);
     }
 
+    public List<Document> findAllByUserPermission(int uId) {
+    	return documentRepository.findAllByUserPermission(uId);
+    }
+    
+    public List<Document> findAllByGroupPermission(int gId) {
+    	return documentRepository.findAllByGroupPermission(gId);
+    }
 }

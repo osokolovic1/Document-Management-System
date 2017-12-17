@@ -16,18 +16,20 @@ import javax.persistence.Table;
 @Embeddable
 public class PermissionUsers implements Serializable{
 	
-	@ManyToMany(targetEntity = User.class, mappedBy = "documents")
+	@ManyToMany(targetEntity = User.class)
 	@Column(name = "user_id")
+	@EmbeddedId
 	private Set<User> users;
 	
-	@ManyToMany(targetEntity=Document.class ,mappedBy = "users", fetch = FetchType.LAZY)
+	@ManyToMany(targetEntity=Document.class, fetch = FetchType.LAZY)
 	@Column(name = "document_id")
+	@EmbeddedId
 	private Set<Document> documents;
 	
-	@Column(name = "can_read")
+	@Column(name = "can_read", columnDefinition="boolean default true", nullable = false)
 	private Boolean CanRead;
 	
-	@Column(name = "can_write")
+	@Column(name = "can_write", columnDefinition="boolean default true", nullable = false)
 	private Boolean CanWrite;
 
 	public Set<User> getUsers() {

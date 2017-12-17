@@ -61,6 +61,7 @@ public class WebController {
 	@Autowired
 	GroupService groupService;
 	
+	
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	
     @RequestMapping(value= {"/login", "/"}, method=RequestMethod.GET)
@@ -100,11 +101,6 @@ public class WebController {
     			session.setAttribute("email", user.getEmail());
     			session.setAttribute("roleid", user.getRole().getRole());
     			
-    			Set<Grupa> grupe = user.getGrupa();
-    			for(Iterator<Grupa> it = grupe.iterator(); it.hasNext();) {
-    				Grupa g = it.next();
-    				System.out.println("GRUPA: " + g.getGroupName());
-    			}
     			view = "home";
     		}
     		else {
@@ -267,25 +263,10 @@ public class WebController {
         FileBucket fileModel = new FileBucket();
         model.addAttribute("fileBucket", fileModel);
  
-        //List<Document> documents = documentService.findAll();
-        Set<Document> docs = userService.findAllUserDocumentsById(user.getID());
-        Set<User> allUsers = userService.findAll();
-        Set<Grupa> allGroups = groupService.findAll();
-        
-        //Izbacivanje korisnika koji trazi listu korisnika
-        Iterator<User> iterator = allUsers.iterator();
-        while (iterator.hasNext()) {
-            User element = iterator.next();
-            if (element.getID().equals(session.getAttribute("userid"))) {
-                iterator.remove();
-                break;
-            }
-        }
+        List<Document> docs = documentService.findAllByUserPermission(user.getID());
 
-        model.addAttribute("groups",allGroups);
-        model.addAttribute("users", allUsers);
         model.addAttribute("documents", docs);
-       //??? System.out.print(docs.get(0).getId());
+
         return "managedocuments";
     }
     
@@ -323,11 +304,19 @@ public class WebController {
             Set<User> sharedWithUsers = new HashSet<User>();
             Set<Grupa> sharedWithGroups = new HashSet<Grupa>();
             /*Ovo ce trebati optimizirati*/
-            for (String u : users)
-            	sharedWithUsers.add(userService.findByUserName(u));
-            for (String g : groups)
-            	sharedWithGroups.add(groupService.findByGroupName(g));
-             
+            
+            if(users != null)
+            	for (String u : users) 
+            		sharedWithUsers.add(userService.findByUserName(u));
+            else
+            	sharedWithUsers = null;
+            
+            if(groups != null)
+            	for (String g : groups)
+            		sharedWithGroups.add(groupService.findByGroupName(g));
+            else
+            	sharedWithGroups = null;
+           
             model.addAttribute("user", user);
             fileBucket.setFile(file);
 
@@ -351,7 +340,7 @@ public class WebController {
         documentService.saveDocument(document);
         System.out.println(document.getId());
     }
-    
+     
     
     /*ne brisati, sluzi za rad na formama*/
     @RequestMapping(value= {"/template"}, method=RequestMethod.GET)
