@@ -21,6 +21,10 @@ public interface DocumentsRepository extends JpaRepository<Document, Integer> {
     void deleteById(int id);
 	
     @Query(value = "SELECT * FROM document d, permission_users pu WHERE"
+    		+ " pu.user_id = :uId AND d.id = pu.document_id AND d.user_id <> pu.user_id", nativeQuery=true)
+    List<Document> findAllByUserPermissionNotOwning(@Param("uId") int uId);
+    
+    @Query(value = "SELECT * FROM document d, permission_users pu WHERE"
     		+ " pu.user_id = :uId AND d.id = pu.document_id", nativeQuery=true)
     List<Document> findAllByUserPermission(@Param("uId") int uId);
     
