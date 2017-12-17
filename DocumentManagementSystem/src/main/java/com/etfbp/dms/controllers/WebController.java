@@ -173,12 +173,31 @@ public class WebController {
         	return "redirect:/";
         
     	Document document = documentService.findById(Integer.parseInt(docId));
-    	model.addAttribute("documentContent", new String(document.getContent()));
+    	if(document.getType().equals("text/plain"))
+    	{
+    		model.addAttribute("documentContent", new String(document.getContent()));
+        	model.addAttribute("docId", docId);
+            
+      
+            
+      
+            return "updateDocument";
+    	}
+    	return "redirect:/";
+    	
+    }
+    @RequestMapping(value = { "/update-document-{docId}" }, method = RequestMethod.POST)
+    public String updateDocumentPost(@PathVariable String docId, ModelMap model,@RequestParam(value="fileContent") String content, HttpServletResponse response, HttpSession session) throws IOException {
+        if(session.getAttribute("userid") == null)
+        	return "redirect:/";
+        
+    	Document document = documentService.findById(Integer.parseInt(docId));
+    	documentService.updateDocument(document.getId(), content.getBytes());
         
   
         
   
-        return "updateDocument";
+        return "redirect:/";
     }
     
     @RequestMapping(value = { "/download-my-document-{docId}" }, method = RequestMethod.GET)

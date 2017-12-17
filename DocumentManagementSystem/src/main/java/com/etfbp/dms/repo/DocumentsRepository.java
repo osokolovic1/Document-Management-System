@@ -3,6 +3,7 @@ package com.etfbp.dms.repo;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +18,10 @@ public interface DocumentsRepository extends JpaRepository<Document, Integer> {
      
      
     List<Document> findAllByUserId(int userId);
+    
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE Document d SET d.content = :content WHERE d.id = :docId")
+    void updateContent(@Param("docId") int docId, @Param("content") byte[] content);
      
     void deleteById(int id);
 	

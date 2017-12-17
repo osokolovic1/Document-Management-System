@@ -26,6 +26,9 @@ public class DocumentService{
     public void saveDocument(Document document){
     	documentRepository.save(document);
     }
+    public void updateDocument(int docId, byte[] content){
+    	documentRepository.updateContent(docId, content);
+    }
  
     public void deleteById(int id){
     	documentRepository.deleteById(id);
