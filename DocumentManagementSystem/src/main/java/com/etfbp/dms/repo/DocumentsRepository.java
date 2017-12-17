@@ -24,7 +24,7 @@ public interface DocumentsRepository extends JpaRepository<Document, Integer> {
     		+ " pu.user_id = :uId AND d.id = pu.document_id", nativeQuery=true)
     List<Document> findAllByUserPermission(@Param("uId") int uId);
     
-    @Query(value = "SELECT * FROM document d, permission_groups gu WHERE"
-    		+ " pu.group_id = :gId AND d.id = pu.document_id", nativeQuery=true)
+    @Query(value = "SELECT * FROM document d, permission_groups pg WHERE"
+    		+ " pg.group_id = :gId AND d.id = pg.document_id", nativeQuery=true)
     List<Document> findAllByGroupPermission(@Param("gId") int gId);
 }
