@@ -31,7 +31,11 @@ public class DocumentService{
     	documentRepository.deleteById(id);
     }
 
-    public List<Document> findAllByUserPermission(int uId) {
+    public List<Document> findAllByUserPermissionNotOwning(int uId) {
+    	return documentRepository.findAllByUserPermissionNotOwning(uId);
+    }
+    
+    public  List<Document> findAllByUserPermission(int uId) {
     	return documentRepository.findAllByUserPermission(uId);
     }
     

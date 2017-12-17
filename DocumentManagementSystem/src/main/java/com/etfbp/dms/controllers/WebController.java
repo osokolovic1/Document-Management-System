@@ -276,7 +276,7 @@ public class WebController {
         FileBucket fileModel = new FileBucket();
         model.addAttribute("fileBucket", fileModel);
  
-        List<Document> docs = documentService.findAllByUserPermission(user.getID());
+        List<Document> docs = documentService.findAllByUserPermissionNotOwning(user.getID());
 
         model.addAttribute("documents", docs);
 
