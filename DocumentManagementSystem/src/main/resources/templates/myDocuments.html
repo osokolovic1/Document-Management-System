@@ -78,6 +78,7 @@
              <tr>
                <th>Naziv dokumenta</th>
                <th>Preuzimanje</th>
+               <th>Uredi</th>
                <th>Brisanje</th>
              </tr>
              <!--not #lists.isEmpty(documents)-->
@@ -90,6 +91,11 @@
                     </td>
                     <td>
                       <a class="btn btn-sm btn-success" th:href="@{'/download-document-' + ${document.id}}">
+                        <span class="glyphicon glyphicon-download-alt"></span>
+                      </a>
+                    </td>
+                    <td>
+                      <a class="btn btn-sm btn-success" th:href="@{'/update-document-' + ${document.id}}">
                         <span class="glyphicon glyphicon-download-alt"></span>
                       </a>
                     </td>

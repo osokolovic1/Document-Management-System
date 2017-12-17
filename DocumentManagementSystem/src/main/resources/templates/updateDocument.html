@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+<form class="form-horizontal" style="margin-top: 5%;" enctype="multipart/form-data"
+            th:action="@{/add-document}" method="POST">
+<div class="form-group">
+              <label class="control-label col-sm-2" for="fileDescription">Sadrzaj dokumenta:</label>
+              <div class="col-sm-8">
+                <textarea rows="6" id="fileContent" th:name="fileContent"
+                 th:text="*{documentContent}" >...</textarea>
+              </div>
+              
+</div>
+<input type="text"  id="fileContent" name="fileContent" th:value="*{documentContent}" />
+
+<div class="form-group">
+               <div class="col-sm-offset-2 col-sm-10">
+                   <button type="submit" class="btn btn-primary btn-lg">Uredi</button>
+               </div>
+</div>
+</form>
+
+</body>
+</html>
