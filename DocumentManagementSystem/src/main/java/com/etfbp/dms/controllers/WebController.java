@@ -101,6 +101,7 @@ public class WebController {
     			session.setAttribute("email", user.getEmail());
     			session.setAttribute("roleid", user.getRole().getRole());
     			
+    			model.addAttribute("user", user);
     			view = "home";
     		}
     		else {
@@ -354,7 +355,7 @@ public class WebController {
 
             saveDocument(fileBucket, user, description, sharedWithUsers, sharedWithGroups);
  
-            return "redirect:/add-document";
+            return "redirect:/my-documents";
         }
     }
     
