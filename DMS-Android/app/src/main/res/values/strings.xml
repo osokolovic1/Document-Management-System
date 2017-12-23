@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">DMS-Android</string>
     <string name="action_settings">Settings</string>
+
+    <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_login1">LoginActivity1</string>
 </resources>

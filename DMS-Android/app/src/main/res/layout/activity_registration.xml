@@ -1,0 +1,191 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="ba.unsa.etf.dms.bp.dms_android.RegistrationActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="365dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:background="#3265ba"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="205dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="  Registracija"
+                    android:id="@+id/textView4"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp"
+                    android:textAlignment="textStart"
+                    android:paddingTop="15sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:padding="@dimen/activity_horizontal_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Molimo, unesite tražene podatke."
+                    android:id="@+id/textView6"
+                    android:layout_gravity="center_horizontal" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/usernameRegWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/usernameRegInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:hint="Korisničko ime:"
+                        android:textColorHint="#3265ba" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/passwordRegWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/usernameRegWrapper"
+                    android:layout_marginTop="4dp">
+
+                    <EditText
+                        android:id="@+id/passwordRegInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:hint="Šifra:"
+                        android:textColorHint="#3265ba" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/nameRegWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/passwordRegWrapper"
+                    android:layout_marginTop="4dp">
+
+                    <EditText
+                        android:id="@+id/nameRegInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:hint="Ime:"
+                        android:textColorHint="#3265ba" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/lastnameRegWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/nameRegWrapper"
+                    android:layout_marginTop="4dp">
+
+                    <EditText
+                        android:id="@+id/lastnameRegInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:hint="Prezime:"
+                        android:textColorHint="#3265ba" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/emailRegWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lastnameRegWrapper"
+                    android:layout_marginTop="4dp">
+
+                    <EditText
+                        android:id="@+id/emailRegInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:hint="Email adresa:"
+                        android:textColorHint="#3265ba" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/registrationBtn"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="158dp"
+                    android:layout_height="wrap_content"
+                    android:text="Registracija"
+                    android:textColor="#FFFFFF"
+                    android:capitalize="words"
+                    android:background="#3265ba"
+                    android:layout_gravity="center" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.38"
+                    android:layout_marginTop="20sp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="                  Ili, prijavite se "
+                        android:id="@+id/textView5" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="OVDJE."
+                        android:id="@+id/linkPrijava"
+                        android:layout_weight="0.19"
+                        android:textColor="#0000EE"
+                        android:clickable="true"
+                        android:linksClickable="false"
+                        android:onClick="showLoginForm" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
