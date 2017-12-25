@@ -14,13 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
-import org.apache.coyote.http11.Http11AprProtocol;
-import org.dom4j.io.DocumentSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +89,6 @@ public class WebController {
     			//potrebno je spremiti u sesiju podatke
     			session.setAttribute("userid", user.getID());
     			session.setAttribute("username", user.getUserName());
-    			session.setAttribute("password", user.getPassword());
     			session.setAttribute("name", user.getName());
     			session.setAttribute("lastname", user.getLastName());
     			session.setAttribute("email", user.getEmail());
@@ -239,6 +232,7 @@ public class WebController {
         response.getOutputStream().write(documentInBytes);
         return null;
     }
+    
     @RequestMapping(value = { "/delete-my-document-{docId}" }, method = RequestMethod.GET)
     public String deleteDocument(@PathVariable String docId, HttpSession session) {
         if(session.getAttribute("userid") == null)

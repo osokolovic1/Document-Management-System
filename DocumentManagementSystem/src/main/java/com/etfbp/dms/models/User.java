@@ -9,6 +9,7 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,7 +54,7 @@ public class User {
 							inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
 	private Set<Grupa> grupa; 
 
-	@ManyToMany(targetEntity = Document.class)
+	@ManyToMany(targetEntity = Document.class, fetch=FetchType.LAZY)
 	@JoinTable(name = "permission_users", joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id"),
 							inverseJoinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"))
 	private Set<Document> documents;
