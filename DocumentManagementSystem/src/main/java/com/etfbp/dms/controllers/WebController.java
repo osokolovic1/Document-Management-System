@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -38,6 +39,7 @@ import com.etfbp.dms.models.User;
 import com.etfbp.dms.models.Grupa;
 import com.etfbp.dms.models.News;
 import com.etfbp.dms.models.NewsToShow;
+import com.etfbp.dms.models.Role;
 import com.etfbp.dms.repo.UserRepository;
 import com.etfbp.dms.services.DocumentService;
 import com.etfbp.dms.services.GroupService;
@@ -116,6 +118,19 @@ public class WebController {
     	
     	return view;
     }
+    @RequestMapping(value= "/contact", method=RequestMethod.GET)
+    public String contact(Model model, HttpSession session) {
+    	if(session.getAttribute("userid") == null) {
+    		return "redirect:/login";
+    	}
+    	
+    	int userId = (int)session.getAttribute("userid");
+    	User user = userService.findById(userId);
+    	model.addAttribute("user", user);
+        model.addAttribute("user", new User());
+        
+        return "contact";
+    }
     
     @RequestMapping(value= "/registration", method=RequestMethod.GET)
     public String registration(Model model, HttpSession session) {
@@ -148,6 +163,8 @@ public class WebController {
         		message += "Korisnik sa unesenim korisničkim imenom već postoji!\n";
         	
         }
+        User novi = userService.findById(user.getID());
+        novi.setRole(new Role("student"));
         
         model.addAttribute("message", message);
         
@@ -319,6 +336,50 @@ public class WebController {
     	
     	
     	return "addNews";
+    }
+    @RequestMapping(value = { "/changePassword" }, method = RequestMethod.GET)
+    public String changePassword(ModelMap model, HttpSession session, HttpServletRequest request) throws IOException{
+    	
+    	if(session.getAttribute("userid") == null) {
+    		return "redirect:/login";
+    	}
+    	
+    	int userId = (int)session.getAttribute("userid");
+    	User user = userService.findById(userId);
+    	model.addAttribute(user);
+    	
+    	
+    	
+    	return "changePassword";
+    }
+    
+    @RequestMapping(value = { "/changePassword" }, method = RequestMethod.POST)
+    public String changePasswordPost(@RequestParam(value="oldPass")String oldPass, @RequestParam(value="newPass") String newPass,
+    									@RequestParam(value="newPass2") String newPass2, ModelMap model, HttpSession session,
+    									HttpServletRequest request) throws IOException{
+    	
+    	if(session.getAttribute("userid") == null) {
+    		return "redirect:/login";
+    	}
+    	
+    	int userId = (int)session.getAttribute("userid");
+    	User user = userService.findById(userId);
+    	model.addAttribute(user);
+    	if(!user.getPassword().equals(oldPass))
+    	{
+    		JOptionPane.showMessageDialog(null, "Insert correct password");
+    		return "changePassword";
+    	}
+    	else if (!newPass.equals(newPass2))
+    	{
+    		JOptionPane.showMessageDialog(null, "You have to insert new password twice");
+    		return "changePassword";
+    	}
+    	
+    	
+    	userService.updatePassword(user.getID(), newPass);
+    	JOptionPane.showMessageDialog(null, "You successfully changed your password");
+    	return "home";
     }
     
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.GET)

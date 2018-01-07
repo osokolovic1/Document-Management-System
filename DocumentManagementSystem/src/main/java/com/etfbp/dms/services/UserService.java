@@ -39,5 +39,9 @@ public class UserService {
 	public Set<Document> findAllUserDocumentsById(Integer id) {
 		return userRepository.findAllUserDocumentsById(id);
 	}
+	
+	public void updatePassword (int userId, String newPass) {
+		userRepository.updatePassword(userId, newPass);
+	}
 
 }

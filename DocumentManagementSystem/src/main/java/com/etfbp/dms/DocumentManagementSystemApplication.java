@@ -2,11 +2,16 @@ package com.etfbp.dms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class DocumentManagementSystemApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DocumentManagementSystemApplication.class, args);
+		//SpringApplication.run(DocumentManagementSystemApplication.class, args);
+		SpringApplicationBuilder builder = new SpringApplicationBuilder(DocumentManagementSystemApplication.class);
+		builder.headless(false);
+		ConfigurableApplicationContext context = builder.run(args);
 	}
 }
