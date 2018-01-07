@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+  <head>
+    <th:block th:include="home :: head"></th:block>
+  </head>
+
+  <body style="overflow-x: hidden;">
+    <th:block th:include="home :: top-navbar"></th:block>
+    <div class="container-fluid" style="padding: 0; !important">
+      <div class="row row-offcanvas row-offcanvas-left">
+
+        <th:block th:include="home :: side-navbar"></th:block>
+
+        <div class="col-sm-10">
+        <div class="jumbotron">
+                  <h1 th:text="${user.name} + ', ovdje možete pregledati novosti'"></h1>
+                  
+                </div>
+          
+            <!--Ovdje se ubacuju podstranice-->
+
+          <hr />
+
+           
+           <br />
+
+          <div class="page-header">
+            <h2>Vijesti:</h2>
+          </div>
+
+          <table class="table table-striped" style="width: 100%;">
+             <tr>
+               <th>Vijest:</th>
+               <th>Vijest dodao:</th>
+             </tr>
+             <!--not #lists.isEmpty(documents)-->
+             <div th:if="${newsList != null}">
+               <tr th:each="news : ${newsList}" th:if="${news.id != null}">
+                  <tr>
+                    <td>
+					  <p th:inline="text" >[[${news.newsText}]]</p>
+                    </td>
+                    <td>
+                      <p th:inline="text" >[[${news.userName}]]</p>
+                    </td>
+      
+                   </tr>
+               </tr>
+             </div>
+           </table>
+
+           <hr />
+
+        </div>
+
+      </div>
+    </div>
+
+    <th:block th:include="home :: scripts"></th:block>
+ </body>
+</html>

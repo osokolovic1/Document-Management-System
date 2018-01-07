@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+  <head>
+    <th:block th:include="home :: head"></th:block>
+  </head>
+
+  <body style="overflow-x: hidden;">
+    <th:block th:include="home :: top-navbar"></th:block>
+    <div class="container-fluid" style="padding: 0; !important">
+      <div class="row row-offcanvas row-offcanvas-left">
+
+        <th:block th:include="home :: side-navbar"></th:block>
+
+        <div class="col-sm-10">
+          <br />
+            <!--Ovdje se ubacuju podstranice-->
+          <div class="page-header">
+            <h2>Dodavanje novosti:</h2>
+          </div>
+          <!--Forma za dodavanje novosti-->
+          <form class="form-horizontal" style="margin-top: 5%;" enctype="multipart/form-data"
+           th:action="@{/add-news}" method="POST">
+
+             <div class="form-group">
+               <label class="control-label col-sm-2" for="fileDescription">Novost:</label>
+               <div class="col-sm-8">
+                 <textarea class="form-control" rows="6" id="newsText" th:name="newsText"
+                  placeholder="Unesite novost" required="true"></textarea>
+               </div>
+             </div>
+
+             <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Dodaj</button>
+                </div>
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+
+    <th:block th:include="home :: scripts"></th:block>
+ </body>
+</html>

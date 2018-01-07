@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.in;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -35,9 +36,12 @@ import com.etfbp.dms.models.Document;
 import com.etfbp.dms.models.FileBucket;
 import com.etfbp.dms.models.User;
 import com.etfbp.dms.models.Grupa;
+import com.etfbp.dms.models.News;
+import com.etfbp.dms.models.NewsToShow;
 import com.etfbp.dms.repo.UserRepository;
 import com.etfbp.dms.services.DocumentService;
 import com.etfbp.dms.services.GroupService;
+import com.etfbp.dms.services.NewsService;
 import com.etfbp.dms.services.UserService;
  
  
@@ -54,6 +58,9 @@ public class WebController {
 	
 	@Autowired
 	GroupService groupService;
+	
+	@Autowired
+	NewsService newsService;
 	
 	
 	Logger log = LoggerFactory.getLogger(this.getClass());
@@ -242,6 +249,27 @@ public class WebController {
         return "redirect:/my-documents";
     }
     
+    @RequestMapping(value = {"/news"}, method = RequestMethod.GET)
+    public String news (ModelMap model, HttpSession session) {
+    	if(session.getAttribute("userid") == null) {
+    		return "redirect:/login";
+    	}
+    	
+    	int userId = (int)session.getAttribute("userid");
+    	User user = userService.findById(userId);
+    	model.addAttribute("user", user);
+    	
+    	List<News> newsList = newsService.findAll();
+    	List<NewsToShow> newsToShow = new ArrayList<>();
+    	for(int i = 0; i < newsList.size(); i++) {
+    		newsToShow.add(new NewsToShow(newsList.get(i).getId(), newsList.get(i).getNews(), newsList.get(i).getUserName()));
+    	}
+        model.addAttribute("newsList", newsToShow);
+        
+        
+        return "news";
+    }
+    
     @RequestMapping(value = { "/my-documents" }, method = RequestMethod.GET)
     public String myDocuments(ModelMap model, HttpSession session) {
     	if(session.getAttribute("userid") == null) {
@@ -277,6 +305,22 @@ public class WebController {
         return "myDocuments";
     }
     
+    @RequestMapping(value = { "/add-news" }, method = RequestMethod.GET)
+    public String addNews(ModelMap model, HttpSession session, HttpServletRequest request) throws IOException{
+    	
+    	if(session.getAttribute("userid") == null) {
+    		return "redirect:/login";
+    	}
+    	
+    	int userId = (int)session.getAttribute("userid");
+    	User user = userService.findById(userId);
+    	model.addAttribute(user);
+    	
+    	
+    	
+    	return "addNews";
+    }
+    
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.GET)
     public String addDocuments(ModelMap model, HttpSession session) {
     	if(session.getAttribute("userid") == null) {
@@ -295,6 +339,30 @@ public class WebController {
         model.addAttribute("documents", docs);
 
         return "managedocuments";
+    }
+    
+    @RequestMapping(value = { "/add-news" }, method = RequestMethod.POST)
+    public String addNews(@RequestParam(value="newsText") String newsText, ModelMap model, HttpSession session, HttpServletRequest request) throws IOException{
+    	
+    	if(session.getAttribute("userid") == null) {
+    		return "redirect:/login";
+    	}
+    	
+    	int userId = (int)session.getAttribute("userid");
+    	User user = userService.findById(userId);
+    	model.addAttribute(user);
+    	
+    	News news = new News (newsText, user);
+    	newsService.saveNews(news);
+    	
+    	List<News> newsList = newsService.findAll();
+    	List<NewsToShow> newsToShow = new ArrayList<>();
+    	for(int i = 0; i < newsList.size(); i++) {
+    		newsToShow.add(new NewsToShow(newsList.get(i).getId(), newsList.get(i).getNews(), newsList.get(i).getUserName()));
+    	}
+        model.addAttribute("newsList", newsToShow);
+    	
+    	return "news";
     }
     
     @RequestMapping(value = { "/add-document" }, method = RequestMethod.POST)
