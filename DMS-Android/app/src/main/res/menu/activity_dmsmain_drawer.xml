@@ -4,34 +4,35 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_my_documents"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_insert_drive_file_black_24dp"
             android:title="Moji dokumenti" />
         <item
-            android:id="@+id/nav_shared"
-            android:icon="@drawable/ic_menu_gallery"
+            android:id="@+id/nav_shared_documents"
+            android:icon="@drawable/ic_cloud_black_24dp"
             android:title="Dijeljeni dokumenti" />
         <item
             android:id="@+id/nav_add_document"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_cloud_upload_black_24dp"
             android:title="Dodaj dokument" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_korisnici"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="Korisnici" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Ostalo">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_postavke"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Postavke" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_odjava"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="Odjava" />
         </menu>
     </item>
 

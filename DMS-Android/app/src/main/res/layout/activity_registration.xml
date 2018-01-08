@@ -29,7 +29,7 @@
                 android:layout_width="365dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
-                android:background="#3265ba"
+                android:background="@color/colorPrimary"
                 android:weightSum="1">
 
                 <TextView
@@ -145,14 +145,14 @@
 
                 <Button
                     android:id="@+id/registrationBtn"
-                    android:layout_marginTop="4dp"
                     android:layout_width="158dp"
                     android:layout_height="wrap_content"
-                    android:text="Registracija"
-                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorPrimary"
                     android:capitalize="words"
-                    android:background="#3265ba"
-                    android:layout_gravity="center" />
+                    android:text="Registracija"
+                    android:textColor="#FFFFFF" />
 
                 <LinearLayout
                     android:orientation="horizontal"

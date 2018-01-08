@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginAndRegistration getInterfaceService() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.9:8181/")
+                .baseUrl("http://192.168.0.17:8181/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         final LoginAndRegistration mInterfaceService = retrofit.create(LoginAndRegistration.class);
