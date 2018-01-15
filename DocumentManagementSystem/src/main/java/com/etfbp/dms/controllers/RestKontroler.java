@@ -133,9 +133,9 @@ public class RestKontroler {
     
     @RequestMapping(value= "/documents/view/{docId}", method=RequestMethod.GET)
     public String viewDocument (@PathVariable String docId, HttpServletResponse response, HttpSession session) throws IOException{
-        if(session.getAttribute("userid") == null)
-        	return "Forbidden";
-        
+        /*if(session.getAttribute("userid") == null)
+        	return "Forbidden";*/
+        int userId=2;
     	Document document = documentService.findById(Integer.parseInt(docId));
     	if(document == null)
     		return "Not found";
@@ -145,14 +145,14 @@ public class RestKontroler {
         Iterator<User> iterator = document.getUsers().iterator();
         while (iterator.hasNext()) {
             User element = iterator.next();
-            if(element.getID().equals((int)session.getAttribute("userid"))) {
+            if(element.getID().equals(userId)) {
             	imaPravoPristupa = true;
             	continue;
             }
         }
     	
-        if(!imaPravoPristupa)
-        	return "Forbidden";
+        /*if(!imaPravoPristupa)
+        	return "Forbidden";*/
         
     	byte[] documentInBytes = documentService.findById(Integer.parseInt(docId)).getContent(); 
     	response.setDateHeader("Expires", -1);
@@ -218,8 +218,8 @@ public class RestKontroler {
     }
     
     @RequestMapping(value = { "/documents/add" }, method = RequestMethod.POST)
-    public String addDocuments(@Valid FileBucket fileBucket, BindingResult result, ModelMap model, @RequestParam MultipartFile file, 
-    		@RequestParam(value="fileDescription") String description, HttpSession session, HttpServletRequest request) throws IOException{
+    public String addDocuments(@RequestParam("file") MultipartFile file, @Valid FileBucket fileBucket, BindingResult result, ModelMap model, 
+    		 HttpSession session, HttpServletRequest request) throws IOException{
     	
     	
     	int userId;// = (int)session.getAttribute("userid");
@@ -265,7 +265,7 @@ public class RestKontroler {
             model.addAttribute("user", user);
             fileBucket.setFile(file);
 
-            saveDocument(fileBucket, user, description, sharedWithUsers, sharedWithGroups);
+            saveDocument(fileBucket, user, "Def desc.", sharedWithUsers, sharedWithGroups);
  
             return "OK";
         }

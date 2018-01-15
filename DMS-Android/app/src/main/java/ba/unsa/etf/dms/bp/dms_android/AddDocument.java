@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -189,13 +190,17 @@ public class AddDocument extends Fragment {
                 uri = resultData.getData();
                 Log.i(TAG, "Uri: " + uri.toString());
                 String path = getPath(getActivity(), uri);
+
+
                 File file = new File(path);
+
                 byte[] buff = new byte[(int) file.length()];
+
                 try {
-                    FileInputStream fis = new FileInputStream(file);
-                    fis.read(buff);
-                    fis.close();
-                    uploadFile(buff, MimeTypeMap.getFileExtensionFromUrl(path), file.getName());
+                    BufferedInputStream buf = new BufferedInputStream(new FileInputStream(file));
+                    buf.read(buff, 0,(int) file.length());
+                    buf.close();
+                    uploadFile(buff, file, MimeTypeMap.getFileExtensionFromUrl(path), file.getName());
 
                 } catch (FileNotFoundException notFoundEx) {
 
@@ -218,7 +223,7 @@ public class AddDocument extends Fragment {
         return byteBuffer.toByteArray();
     }
 
-    private void uploadFile(byte [] file, String type, String name) {
+    private void uploadFile(byte [] file,File fileObj, String type, String name) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RETROFIT_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -226,12 +231,11 @@ public class AddDocument extends Fragment {
 
         FileUploadInterface fileUploadInterface = retrofit.create(FileUploadInterface.class);
 
-        RequestBody requestFile = RequestBody.create(MediaType.parse(type), file);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", fileObj.getName(), requestFile);
 
-        MultipartBody.Part body = MultipartBody.Part.createFormData(name,name,requestFile);
-
-
-        Call<ResponseBody> call = fileUploadInterface.uploadFile(body);
+        RequestBody desc = RequestBody.create(MediaType.parse("multipart/form-data"),"Opis");
+        Call<ResponseBody> call = fileUploadInterface.uploadFile(body, desc);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -248,13 +252,6 @@ public class AddDocument extends Fragment {
                     Toast.makeText(getActivity(), "Response error", Toast.LENGTH_LONG).show();
                     Gson gson = new Gson();
 
-                    try {
-
-                        Response errorResponse = gson.fromJson(errorBody.string(), Response.class);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
 
@@ -263,6 +260,17 @@ public class AddDocument extends Fragment {
                 Toast.makeText(getActivity(), "Failed", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
+        Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            return contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
     }
 
     public static String getPath(Context context, Uri uri) {

@@ -64,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 String mLoginObject = response.body();
                 String returnedResponse = mLoginObject.toString();
-                Toast.makeText(LoginActivity.this, "Returned " + returnedResponse, Toast.LENGTH_LONG).show();
                 //showProgress(false);
                 if(returnedResponse.trim().equals("OK")){
                     // redirect to Main Activity page

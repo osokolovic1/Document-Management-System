@@ -149,13 +149,16 @@ public class DocumentListFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()) {
+
                     InputStream inputStream = null;
                     OutputStream outputStream = null;
                     DocumentInfo docInfo = null;
 
                     for(int i = 0; i < documentInfos.size(); i++)
-                        if(documentInfos.get(i).getId() == docId)
+                        if(documentInfos.get(i).getId() == docId) {
                             docInfo = documentInfos.get(i);
+                            break;
+                        }
                     File myFile = null;
           /*          if(preview)
                         myFile = new File(getActivity().getFilesDir()+File.separator+docInfo.getName());
@@ -201,7 +204,7 @@ public class DocumentListFragment extends Fragment {
 
                             startActivity(intent);
                         } else {
-                            Toast.makeText(getActivity(), "Download complete", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Download completed", Toast.LENGTH_LONG).show();
                         }
 
                     }catch (Exception e) {
